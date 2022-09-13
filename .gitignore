@@ -2,7 +2,6 @@
 node_modules
 /dist
 
-
 # local env files
 .env.local
 .env.*.local
@@ -28,6 +27,6 @@ dist
 package-lock.json
 **/*solved*
 **/*Config.js*
-!/src/apiConfig.js
+!/webpack.config.js
 /public/*.js
 /public/*.html
