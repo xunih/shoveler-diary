@@ -1,54 +1,54 @@
 var express = require("express");
 var router = express.Router();
-var Camel = require("../models/camel");
+var User = require("../models/user");
 
 // Return a list of all camels
 router.get("/", function (req, res, next) {
-  Camel.find(function (err, camels) {
+  User.find(function (err, users) {
     if (err) {
       return next(err);
     }
-    res.json({ camels: camels });
+    res.json({ users: users });
   });
 });
 
 // Create a new camel
 router.post("/", function (req, res, next) {
   console.log(req.body)
-  var camel = new Camel(req.body);
-  camel.save(function (err) {
+  var user = new User(req.body);
+  user.save(function (err) {
     if (err) {
       return next(err);
     }
-    res.status(201).json(camel);
+    res.status(201).json(user);
   });
 });
 
 // Return the camel with the given ID
 router.get("/:id", function (req, res, next) {
   var id = req.params.id;
-  Camel.findById(id, function (err, camel) {
+  User.findById(id, function (err, user) {
     if (err) {
       return next(err);
     }
-    if (camel === null) {
-      return res.status(404).json({ message: "Camel not found" });
+    if (user === null) {
+      return res.status(404).json({ message: "User not found" });
     }
-    res.json(camel);
+    res.json(user);
   });
 });
 
 // Delete the camel with the given ID
 router.delete("/:id", function (req, res, next) {
   var id = req.params.id;
-  Camel.findOneAndDelete({ _id: id }, function (err, camel) {
+  User.findOneAndDelete({ _id: id }, function (err, user) {
     if (err) {
       return next(err);
     }
-    if (camel === null) {
-      return res.status(404).json({ message: "Camel not found" });
+    if (user === null) {
+      return res.status(404).json({ message: "User not found" });
     }
-    res.json(camel);
+    res.json(user);
   });
 });
 

@@ -2,7 +2,7 @@ const express = require("express");
 var mongoose = require("mongoose");
 var bodyParser = require("body-parser");
 require("dotenv/config");
-var camelsController = require("./controllers/camels");
+var usersController = require("./controllers/users");
 
 // Variables
 var mongoURI = process.env.MONGODB_URI;
@@ -22,6 +22,6 @@ const app = express();
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => res.send("We are on posts"));
-app.use("/camels", camelsController);
+app.use("/users", usersController);
 
 app.listen(8080);
