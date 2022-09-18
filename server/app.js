@@ -19,6 +19,7 @@ mongoose.connect(mongoURI, { useNewUrlParser: true }, function (err) {
 });
 
 const app = express();
+app.use(bodyParser.json());
 
 app.get("/", (req, res) => res.send("We are on posts"));
 app.use("/camels", camelsController);

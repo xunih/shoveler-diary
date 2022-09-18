@@ -14,6 +14,7 @@ router.get("/", function (req, res, next) {
 
 // Create a new camel
 router.post("/", function (req, res, next) {
+  console.log(req.body)
   var camel = new Camel(req.body);
   camel.save(function (err) {
     if (err) {
