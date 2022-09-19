@@ -36,6 +36,7 @@ router.get("/:id", function (req, res, next) {
     }
     res.json(event);
   })
+    .clone()
     .populate("pet")
     .then((p) => console.log(p))
     .catch((error) => console.log(error));

@@ -36,6 +36,7 @@ router.get("/:id", function (req, res, next) {
     }
     res.json(user);
   })
+    .clone()
     .populate("pet")
     .populate("profile")
     .populate("event")
