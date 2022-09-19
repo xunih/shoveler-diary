@@ -14,7 +14,7 @@ router.get("/", function (req, res, next) {
 
 // Create a new user
 router.post("/", function (req, res, next) {
-  console.log(req.body)
+  console.log(req.body);
   var user = new User(req.body);
   user.save(function (err) {
     if (err) {
@@ -35,7 +35,12 @@ router.get("/:id", function (req, res, next) {
       return res.status(404).json({ message: "User not found" });
     }
     res.json(user);
-  });
+  })
+    .populate("pet")
+    .populate("profile")
+    .populate("event")
+    .then((p) => console.log(p))
+    .catch((error) => console.log(error));
 });
 
 // Delete the user with the given ID

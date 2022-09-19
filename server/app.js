@@ -2,7 +2,11 @@ const express = require("express");
 var mongoose = require("mongoose");
 var bodyParser = require("body-parser");
 require("dotenv/config");
+
 var usersController = require("./controllers/users");
+var petsController = require("./controllers/pets");
+var profilesController = require("./controllers/profiles");
+var eventsController = require("./controllers/events");
 
 // Variables
 var mongoURI = process.env.MONGODB_URI;
@@ -23,5 +27,8 @@ app.use(bodyParser.json());
 
 app.get("/", (req, res) => res.send("We are on posts"));
 app.use("/users", usersController);
+app.use("/pets", petsController);
+app.use("/profiles", profilesController);
+app.use("/events", eventsController);
 
-app.listen(8080);
+app.listen(port);
