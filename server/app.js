@@ -7,6 +7,7 @@ var usersController = require("./controllers/users");
 var petsController = require("./controllers/pets");
 var profilesController = require("./controllers/profiles");
 var eventsController = require("./controllers/events");
+var postsController = require("./controllers/posts")
 
 // Variables
 var mongoURI = process.env.MONGODB_URI;
@@ -30,5 +31,6 @@ app.use("/users", usersController);
 app.use("/pets", petsController);
 app.use("/profiles", profilesController);
 app.use("/events", eventsController);
+app.use("/posts", postsController);
 
 app.listen(port);

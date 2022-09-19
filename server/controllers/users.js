@@ -40,6 +40,7 @@ router.get("/:id", function (req, res, next) {
     .populate("pet")
     .populate("profile")
     .populate("event")
+    .populate("post")
     .then((p) => console.log(p))
     .catch((error) => console.log(error));
 });
