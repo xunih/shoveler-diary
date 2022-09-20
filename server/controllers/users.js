@@ -41,6 +41,7 @@ router.get("/:id", function (req, res, next) {
     .populate("profile")
     .populate("event")
     .populate("post")
+    .populate("discussion")
     .then((p) => console.log(p))
     .catch((error) => console.log(error));
 });
