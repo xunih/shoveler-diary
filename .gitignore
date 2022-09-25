@@ -30,3 +30,5 @@ package-lock.json
 !/webpack.config.js
 /public/*.js
 /public/*.html
+
+server/.env
