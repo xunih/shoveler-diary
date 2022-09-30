@@ -27,12 +27,12 @@ mongoose.connect(mongoURI, { useNewUrlParser: true }, function (err) {
 const app = express();
 app.use(bodyParser.json());
 
-app.get("/", (req, res) => res.send("We are on posts"));
-app.use("/users", usersController);
-app.use("/pets", petsController);
-app.use("/profiles", profilesController);
-app.use("/events", eventsController);
-app.use("/posts", postsController);
-app.use("/discussions", discussionController);
+app.get("/api", (req, res) => res.send("We are on posts"));
+app.use("/api/users", usersController);
+app.use("/api/pets", petsController);
+app.use("/api/profiles", profilesController);
+app.use("/api/events", eventsController);
+app.use("/api/posts", postsController);
+app.use("/api/discussions", discussionController);
 
 app.listen(port);
