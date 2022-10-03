@@ -1,6 +1,5 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import { Api } from "@/Api";
 
 // reactive state
 const count = ref(0);
