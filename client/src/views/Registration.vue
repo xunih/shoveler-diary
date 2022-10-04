@@ -4,9 +4,7 @@
       <EmailField v-model="user.email" /><PasswordField
         v-model="user.password"
       />
-      <button class="ui button red fluid big" @click="createUser">
-        Sign Up
-      </button>
+      <button @click="createUser">Sign Up</button>
     </form>
   </section>
 </template>
