@@ -1,0 +1,28 @@
+<template>
+  <div class="field">
+    <div class="ui left icon input big">
+      <input
+        type="email"
+        placeholder="Email"
+        autocomplete="off"
+        v-model="input"
+        @keyup="validateInput"
+      />
+    </div>
+    <div class="ui basic label pointing red" v-if="error">
+      {{ error }}
+    </div>
+  </div>
+</template>
+<script>
+import { ref, computed } from "vue";
+export default {
+  setup() {
+    let input = ref(null);
+    const error = computed(() => {
+      return input.value === "" ? "The Input field is required" : "";
+    });
+    return { input, error };
+  },
+};
+</script>
