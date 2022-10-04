@@ -6,6 +6,7 @@
           placeholder="Password"
           autocomplete="off"
           v-model="input"
+          @input="$emit('update:modelValue', $event.target.value)"
           @keyup="validateInput"
         />
       </div>

@@ -1,22 +1,81 @@
 <template>
   <section class="signup-view">
     <form class="ui form">
-      <EmailField></EmailField><PasswordField></PasswordField>
-      <button class="ui button red fluid big" @click="signUpButtonPressed">
+      <EmailField v-model="user.email" /><PasswordField
+        v-model="user.password"
+      />
+      <button class="ui button red fluid big" @click="createUser">
         Sign Up
       </button>
     </form>
   </section>
 </template>
 <script>
+import { Api } from "../Api";
 import EmailField from "../components/EmailField.vue";
 import PasswordField from "../components/PasswordField.vue";
+import { reactive } from "vue";
 export default {
   setup() {
+    let userStatus = reactive({
+      message: "Welcome!",
+      isRegistered: false,
+      isEmpty: false,
+      duplicateEmail: false,
+    });
 
-    const signUpButtonPressed = () => {
-      console.log(user);
+    let user = reactive({
+      email: "",
+      password: "",
+      userId: "",
+      profileId: null,
+    });
+    const createUser = () => {
+      if (user.email === "" || user.password === "") {
+        userStatus.isEmpty = true;
+        userStatus.duplicateEmail = false;
+      } else {
+        userStatus.isEmpty = false;
+        var newUser = {
+          email: user.email,
+          password: user.password,
+        };
+        // creates a new user
+        console.log(newUser);
+        Api.post("/users", newUser)
+          .then((response) => {
+            user.userID = response.data._id;
+            console.log(response.data._id);
+            console.log(response.data.email);
+            userStatus.isError = false;
+            userStatus.duplicateEmail = false;
+            userStatus.isRegistered = true;
+            user.userId = response.data._id;
+            localStorage.userID = user.userID;
+            var newProfile = {
+              username: response.data.email,
+            };
+            console.log(newProfile);
+            Api.post("users/" + user.userId + "/profiles", newProfile).then(
+              (response) => {
+                userStatus.isError = false;
+                userStatus.duplicateEmail = false;
+                userStatus.isRegistered = true;
+                user.profileId = response.data.profile._id;
+                console.log(user.profileId);
+              }
+            );
+          })
+          .then()
+          .catch((error) => {
+            console.log(error);
+            // error due to duplicate email address in the database
+            userStatus.duplicateEmail = true;
+            userStatus.isEmpty = false;
+          });
+      }
     };
+    return { user, createUser };
   },
   components: {
     EmailField,
