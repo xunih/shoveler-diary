@@ -6,6 +6,10 @@
       />
       <button @click="createUser">Sign Up</button>
     </form>
+    <p v-if="isError == true">
+      That email is already registered. Try again with a new email or login
+      here.
+    </p>
     <div v-if="isRegistered == true">
       <p>Welcome!</p>
       <router-link :to="{ path: '/' }"><button>Home</button></router-link>
@@ -20,7 +24,6 @@ import { reactive, ref } from "vue";
 export default {
   setup() {
     let isRegistered = ref(false);
-    let isEmpty = ref(false);
     let isError = ref(false);
     let duplicateEmail = ref(false);
 
@@ -31,50 +34,39 @@ export default {
       profileId: null,
     });
     const createUser = () => {
-      if (user.email === "" || user.password === "") {
-        isEmpty = true;
-        duplicateEmail = false;
-      } else {
-        isEmpty = false;
+      if (user.email !== "" && user.password !== "") {
         var newUser = {
           email: user.email,
           password: user.password,
         };
-        // creates a new user
-        console.log(newUser);
+
         Api.post("/users", newUser)
           .then((response) => {
-            user.userID = response.data._id;
-            console.log(isRegistered);
+            user.userId = response.data._id;
             isError.value = !isError.value;
             duplicateEmail.value = !isRegistered.value;
             isRegistered.value = !isRegistered.value;
-            console.log(isRegistered);
             user.userId = response.data._id;
-            localStorage.userID = user.userID;
             var newProfile = {
               username: response.data.email,
             };
-            console.log(newProfile);
+
             Api.post("/users/" + user.userId + "/profiles", newProfile).then(
               (response) => {
                 isError.value = !isError.value;
                 duplicateEmail.value = !duplicateEmail.value;
                 user.profileId = response.data.profile._id;
-                console.log(isRegistered);
               }
             );
           })
           .then()
           .catch((error) => {
-            console.log(error);
-            // error due to duplicate email address in the database
-            duplicateEmail = true;
-            isEmpty = false;
+            console.log("Error message " + error);
+            isError.value = !isError.value;
           });
       }
     };
-    return { user, createUser, isError, isRegistered, isEmpty, duplicateEmail };
+    return { user, createUser, isError, isRegistered, duplicateEmail };
   },
   components: {
     EmailField,
