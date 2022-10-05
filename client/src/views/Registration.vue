@@ -1,26 +1,28 @@
 <template>
   <section class="signup-view">
-    <form class="ui form">
+    <form v-if="isRegistered == false" class="ui form">
       <EmailField v-model="user.email" /><PasswordField
         v-model="user.password"
       />
       <button @click="createUser">Sign Up</button>
     </form>
+    <div v-if="isRegistered == true">
+      <p>Welcome!</p>
+      <router-link :to="{ path: '/' }"><button>Home</button></router-link>
+    </div>
   </section>
 </template>
 <script>
 import { Api } from "../Api";
 import EmailField from "../components/EmailField.vue";
 import PasswordField from "../components/PasswordField.vue";
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 export default {
   setup() {
-    let userStatus = reactive({
-      message: "Welcome!",
-      isRegistered: false,
-      isEmpty: false,
-      duplicateEmail: false,
-    });
+    let isRegistered = ref(false);
+    let isEmpty = ref(false);
+    let isError = ref(false);
+    let duplicateEmail = ref(false);
 
     let user = reactive({
       email: "",
@@ -30,10 +32,10 @@ export default {
     });
     const createUser = () => {
       if (user.email === "" || user.password === "") {
-        userStatus.isEmpty = true;
-        userStatus.duplicateEmail = false;
+        isEmpty = true;
+        duplicateEmail = false;
       } else {
-        userStatus.isEmpty = false;
+        isEmpty = false;
         var newUser = {
           email: user.email,
           password: user.password,
@@ -43,11 +45,11 @@ export default {
         Api.post("/users", newUser)
           .then((response) => {
             user.userID = response.data._id;
-            console.log(response.data._id);
-            console.log(response.data.email);
-            userStatus.isError = false;
-            userStatus.duplicateEmail = false;
-            userStatus.isRegistered = true;
+            console.log(isRegistered);
+            isError.value = !isError.value;
+            duplicateEmail.value = !isRegistered.value;
+            isRegistered.value = !isRegistered.value;
+            console.log(isRegistered);
             user.userId = response.data._id;
             localStorage.userID = user.userID;
             var newProfile = {
@@ -56,11 +58,10 @@ export default {
             console.log(newProfile);
             Api.post("/users/" + user.userId + "/profiles", newProfile).then(
               (response) => {
-                userStatus.isError = false;
-                userStatus.duplicateEmail = false;
-                userStatus.isRegistered = true;
+                isError.value = !isError.value;
+                duplicateEmail.value = !duplicateEmail.value;
                 user.profileId = response.data.profile._id;
-                console.log(user.profileId);
+                console.log(isRegistered);
               }
             );
           })
@@ -68,12 +69,12 @@ export default {
           .catch((error) => {
             console.log(error);
             // error due to duplicate email address in the database
-            userStatus.duplicateEmail = true;
-            userStatus.isEmpty = false;
+            duplicateEmail = true;
+            isEmpty = false;
           });
       }
     };
-    return { user, createUser };
+    return { user, createUser, isError, isRegistered, isEmpty, duplicateEmail };
   },
   components: {
     EmailField,
