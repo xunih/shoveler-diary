@@ -6,7 +6,7 @@
       />
       <button @click="createUser">Sign Up</button>
     </form>
-    <p v-if="isError == true">
+    <p v-if="isError == true && isRegistered == false">
       That email is already registered. Try again with a new email or login
       here.
     </p>
@@ -25,7 +25,6 @@ export default {
   setup() {
     let isRegistered = ref(false);
     let isError = ref(false);
-    let duplicateEmail = ref(false);
 
     let user = reactive({
       email: "",
@@ -43,9 +42,7 @@ export default {
         Api.post("/users", newUser)
           .then((response) => {
             user.userId = response.data._id;
-            isError.value = !isError.value;
-            duplicateEmail.value = !isRegistered.value;
-            isRegistered.value = !isRegistered.value;
+            isRegistered.value = true;
             user.userId = response.data._id;
             var newProfile = {
               username: response.data.email,
@@ -53,8 +50,6 @@ export default {
 
             Api.post("/users/" + user.userId + "/profiles", newProfile).then(
               (response) => {
-                isError.value = !isError.value;
-                duplicateEmail.value = !duplicateEmail.value;
                 user.profileId = response.data.profile._id;
               }
             );
@@ -62,11 +57,11 @@ export default {
           .then()
           .catch((error) => {
             console.log("Error message " + error);
-            isError.value = !isError.value;
+            isError.value = true;
           });
       }
     };
-    return { user, createUser, isError, isRegistered, duplicateEmail };
+    return { user, createUser, isError, isRegistered };
   },
   components: {
     EmailField,
