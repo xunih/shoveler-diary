@@ -54,7 +54,7 @@ export default {
               username: response.data.email,
             };
             console.log(newProfile);
-            Api.post("users/" + user.userId + "/profiles", newProfile).then(
+            Api.post("/users/" + user.userId + "/profiles", newProfile).then(
               (response) => {
                 userStatus.isError = false;
                 userStatus.duplicateEmail = false;
