@@ -31,12 +31,14 @@ export default {
       password: "",
       userId: "",
       profileId: null,
+      post: [],
     });
     const createUser = () => {
       if (user.email !== "" && user.password !== "") {
         var newUser = {
           email: user.email,
           password: user.password,
+          post: user.post,
         };
 
         Api.post("/users", newUser)

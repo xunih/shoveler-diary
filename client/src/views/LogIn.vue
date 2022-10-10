@@ -27,6 +27,7 @@ export default {
       password: "",
       userId: "",
       profielId: "",
+      post: [],
     });
 
     const loginButtonPressed = () => {
@@ -38,11 +39,10 @@ export default {
         console.log("hello");
         Api.get("/users").then((response) => {
           for (var i = 0; i < response.data.users.length; i++) {
-            console.log("hi");
             if (user.email === response.data.users[i].email) {
               user.userId = response.data.users[i]._id;
               user.profileId = response.data.users[i].profile;
-              console.log("hej" + user.profileId);
+              user.post = response.data.users[i].post
               login();
               break;
             }

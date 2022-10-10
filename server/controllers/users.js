@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var User = require("../models/user");
 var Profile = require("../models/profile");
+var Post = require("../models/post");
 
 // Return a list of all users
 router.get("/", function (req, res, next) {
@@ -105,7 +106,7 @@ router.post("/:id/posts", function (req, res, next) {
           message: "User not found",
         });
       }
-      user.posts.push(post);
+      user.post.push(post);
       user.save();
       res.status(201).json(user);
     })
