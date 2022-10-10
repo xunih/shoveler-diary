@@ -30,7 +30,7 @@ import { Api } from "../Api";
 import { reactive, ref } from "vue";
 export default {
   setup() {
-    let ifPosted = false;
+    let isPosted = ref(false);
     let post = reactive({
       title: "",
       description: "",
@@ -50,18 +50,18 @@ export default {
         // creates a new post
         Api.post(`/users/${localStorage.userId}/posts/`, newPost)
           .then((response) => {
+            isPosted.value = true;
             post.userId = localStorage.userId;
             post.postId = response.data._id;
             console.log(response.data._id);
             console.log(response.data.title);
-            isPosted = true;
           })
           .catch((error) => {
             console.log(error);
           });
       }
     };
-    return { post, createPost };
+    return { isPosted, post, createPost };
   },
 };
 </script>

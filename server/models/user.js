@@ -28,10 +28,12 @@ var userSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "events",
   },
-  post: {
-    type: Schema.Types.ObjectId,
-    ref: "posts",
-  },
+  post: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "posts",
+    },
+  ],
   discussion: {
     type: Schema.Types.ObjectId,
     ref: "discussions",
