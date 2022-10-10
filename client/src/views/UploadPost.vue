@@ -52,9 +52,8 @@ export default {
           .then((response) => {
             isPosted.value = true;
             post.userId = localStorage.userId;
-            post.postId = response.data._id;
-            console.log(response.data._id);
-            console.log(response.data.title);
+            post.postId = response.data.post._id;
+            console.log(response.data);
           })
           .catch((error) => {
             console.log(error);

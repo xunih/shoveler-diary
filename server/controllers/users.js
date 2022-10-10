@@ -106,11 +106,7 @@ router.post("/:id/posts", function (req, res, next) {
           message: "User not found",
         });
       }
-      if (user.posts == undefined) {
-        console.log("inside undefined")
-        user.posts = [];
-      }
-      user.posts = [...user.posts, post];
+      user.post.push(post);
       user.save();
       res.status(201).json(user);
     })
