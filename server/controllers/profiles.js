@@ -39,12 +39,11 @@ router.get("/:id", function (req, res, next) {
     }
     res.json(profile);
   })
-    .populate("user")
+    .clone()
     .exec(function (err, profile) {
       if (err) {
         return next(err);
       }
-      console.log("User added");
     });
 });
 
