@@ -52,6 +52,7 @@ export default {
     };
     const login = () => {
       localStorage.userId = user.userId;
+      console.log(localStorage.users)
       localStorage.email = user.email;
     };
     return {
