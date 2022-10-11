@@ -24,6 +24,8 @@ export default {
         },
         initialView: "dayGridMonth",
         editable: true,
+        startEditable: true,
+        durationEditable: true,
         selectable: true,
         selectMirror: true,
         dayMaxEvents: true,
@@ -53,21 +55,23 @@ export default {
     },
     handleDateSelect(selectInfo) {
       let title = prompt("Please enter a new title for your event");
+      let startTime = prompt("Please enter a start time for your event");
+      let endTime = prompt("Please enter a end time for your event");
       let calendarApi = selectInfo.view.calendar;
       calendarApi.unselect(); // clear date selection
       if (title) {
         calendarApi.addEvent({
           id: createEventId(),
           title,
-          start: selectInfo.start,
-          end: selectInfo.end,
+          start: new Date(startTime),
+          end: new Date(endTime),
           allDay: false,
         });
-        console.log(selectInfo.start);
-        console.log(selectInfo.end);
+        console.log(new Date(startTime));
+        console.log(new Date(endTime));
         this.calendarEvent.title = title;
-        this.calendarEvent.startTime = selectInfo.start;
-        this.calendarEvent.endTime = selectInfo.end;
+        this.calendarEvent.startTime = new Date(startTime);
+        this.calendarEvent.endTime = new Date(endTime);
         var newEvent = {
           title: this.calendarEvent.title,
           startTime: this.calendarEvent.startTime,
@@ -125,7 +129,10 @@ export default {
         <h2>All Events ({{ currentEvents.length }})</h2>
         <ul>
           <li v-for="event in currentEvents" :key="event.id">
-            <b>{{ event.startStr }}</b>
+            <b>{{ event.start }}</b>
+            to
+            <b>{{ event.end}}</b>
+            <br />
             <i>{{ event.title }}</i>
           </li>
         </ul>
