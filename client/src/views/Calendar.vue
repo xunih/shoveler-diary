@@ -23,7 +23,6 @@ export default {
           right: "dayGridMonth,timeGridWeek,timeGridDay",
         },
         initialView: "dayGridMonth",
-        initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
         editable: true,
         selectable: true,
         selectMirror: true,
@@ -41,6 +40,8 @@ export default {
       currentEvents: [],
       calendarEvent: {
         title: "",
+        startTime: "",
+        endTime: "",
         userId: "",
         eventId: "",
       },
@@ -62,9 +63,15 @@ export default {
           end: selectInfo.endStr,
           allDay: selectInfo.allDay,
         });
+        console.log(selectInfo.startStr);
+        console.log(selectInfo.endStr);
         this.calendarEvent.title = title;
+        this.calendarEvent.startTime = new Date(selectInfo.startStr);
+        this.calendarEvent.endTime = new Date(selectInfo.endStr);
         var newEvent = {
           title: this.calendarEvent.title,
+          startTime: this.calendarEvent.startTime,
+          endTime: this.calendarEvent.endTime,
         };
         Api.post(`/users/${localStorage.userId}/events/`, newEvent)
           .then((response) => {
