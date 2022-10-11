@@ -5,9 +5,11 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { createEventId } from "../event-utilis.js";
+import Modal from "../components/Modal.vue";
 export default {
   components: {
-    FullCalendar, // make the <FullCalendar> tag available
+    FullCalendar,
+    Modal,
   },
   data: function () {
     return {
@@ -34,8 +36,8 @@ export default {
         eventClick: this.handleEventClick,
         eventsSet: this.handleEvents,
         /* you can update a remote database when these fire:
-        eventAdd:
-        eventChange:
+        eventAdd: 
+        eventChange: 
         eventRemove:
         */
       },
@@ -47,6 +49,7 @@ export default {
         userId: "",
         eventId: "",
       },
+      ifAdded: false,
     };
   },
   methods: {
@@ -54,6 +57,7 @@ export default {
       this.calendarOptions.weekends = !this.calendarOptions.weekends; // update a property
     },
     handleDateSelect(selectInfo) {
+      this.ifAdded = true;
       let title = prompt("Please enter a new title for your event");
       let startTime = prompt("Please enter a start time for your event");
       let endTime = prompt("Please enter a end time for your event");
@@ -151,6 +155,11 @@ export default {
           <i>{{ arg.event.title }}</i>
         </template>
       </FullCalendar>
+      <div v-if="ifAdded">
+        <transition name="bounce" mode="out-in">
+          <Modal/>
+        </transition>
+      </div>
     </div>
   </div>
 </template>
