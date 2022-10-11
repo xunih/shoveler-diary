@@ -4,7 +4,7 @@ import FullCalendar from "@fullcalendar/vue3";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { INITIAL_EVENTS, createEventId } from "../event-utilis.js";
+import { createEventId } from "../event-utilis.js";
 export default {
   components: {
     FullCalendar, // make the <FullCalendar> tag available
@@ -81,7 +81,6 @@ export default {
           .then((response) => {
             this.calendarEvent.userId = localStorage.userId;
             this.calendarEvent.eventId = response.data.event.slice(-1);
-            console.log(response.data.event.slice(-1));
           })
           .catch((error) => {
             console.log(error);
@@ -96,12 +95,12 @@ export default {
       ) {
         clickInfo.event.remove();
         Api.delete(`/events/${this.calendarEvent.eventId}`)
-        .then(response => {
-          console.log(response.data.message)
-        })
-        .catch(error => {
-          console.log(error)
-        })
+          .then((response) => {
+            console.log("Event deleted");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
     },
     handleEvents(events) {
@@ -138,7 +137,7 @@ export default {
           <li v-for="event in currentEvents" :key="event.id">
             <b>{{ event.start }}</b>
             to
-            <b>{{ event.end}}</b>
+            <b>{{ event.end }}</b>
             <br />
             <i>{{ event.title }}</i>
           </li>
