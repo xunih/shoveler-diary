@@ -3,6 +3,7 @@ import Home from "./views/Home.vue";
 import Register from "./views/Registration.vue";
 import LogIn from "./views/Login.vue";
 import UploadPost from "./views/UploadPost.vue";
+import Calendar from "./views/Calendar.vue";
 
 const routes = [
   { path: "/", component: Home, name: "Home" },
@@ -17,9 +18,14 @@ const routes = [
     name: "Login",
   },
   {
-    path: "/upload-post",
+    path: "/post",
     component: UploadPost,
     name: "UploadPost",
+  },
+  {
+    path: "/calendar",
+    component: Calendar,
+    name: "Calendar",
   },
 ];
 
