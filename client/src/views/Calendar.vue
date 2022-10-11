@@ -80,8 +80,8 @@ export default {
         Api.post(`/users/${localStorage.userId}/events/`, newEvent)
           .then((response) => {
             this.calendarEvent.userId = localStorage.userId;
-            this.calendarEvent.eventId = response.data.event._id;
-            console.log(response.data);
+            this.calendarEvent.eventId = response.data.event.slice(-1);
+            console.log(response.data.event.slice(-1));
           })
           .catch((error) => {
             console.log(error);
@@ -95,6 +95,13 @@ export default {
         )
       ) {
         clickInfo.event.remove();
+        Api.delete(`/events/${this.calendarEvent.eventId}`)
+        .then(response => {
+          console.log(response.data.message)
+        })
+        .catch(error => {
+          console.log(error)
+        })
       }
     },
     handleEvents(events) {
