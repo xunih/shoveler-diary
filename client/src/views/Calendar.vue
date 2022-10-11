@@ -1,4 +1,5 @@
 <script>
+import { Api } from "../Api";
 import FullCalendar from "@fullcalendar/vue3";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -38,6 +39,11 @@ export default {
         */
       },
       currentEvents: [],
+      calendarEvent: {
+        title: "",
+        userId: "",
+        eventId: "",
+      },
     };
   },
   methods: {
@@ -56,6 +62,19 @@ export default {
           end: selectInfo.endStr,
           allDay: selectInfo.allDay,
         });
+        this.calendarEvent.title = title;
+        var newEvent = {
+          title: this.calendarEvent.title,
+        };
+        Api.post(`/users/${localStorage.userId}/events/`, newEvent)
+          .then((response) => {
+            this.calendarEvent.userId = localStorage.userId;
+            this.calendarEvent.eventId = response.data.event._id;
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
     },
     handleEventClick(clickInfo) {
