@@ -59,15 +59,15 @@ export default {
         calendarApi.addEvent({
           id: createEventId(),
           title,
-          start: selectInfo.startStr,
-          end: selectInfo.endStr,
-          allDay: selectInfo.allDay,
+          start: selectInfo.start,
+          end: selectInfo.end,
+          allDay: false,
         });
-        console.log(selectInfo.startStr);
-        console.log(selectInfo.endStr);
+        console.log(selectInfo.start);
+        console.log(selectInfo.end);
         this.calendarEvent.title = title;
-        this.calendarEvent.startTime = new Date(selectInfo.startStr);
-        this.calendarEvent.endTime = new Date(selectInfo.endStr);
+        this.calendarEvent.startTime = selectInfo.start;
+        this.calendarEvent.endTime = selectInfo.end;
         var newEvent = {
           title: this.calendarEvent.title,
           startTime: this.calendarEvent.startTime,
