@@ -4,6 +4,7 @@ import Register from "./views/Registration.vue";
 import LogIn from "./views/Login.vue";
 import UploadPost from "./views/UploadPost.vue";
 import Calendar from "./views/Calendar.vue";
+import DiscussionBoard from "./views/DiscussionBoard.vue";
 
 const routes = [
   { path: "/", component: Home, name: "Home" },
@@ -26,6 +27,11 @@ const routes = [
     path: "/calendar",
     component: Calendar,
     name: "Calendar",
+  },
+  {
+    path: "/discussion",
+    component: DiscussionBoard,
+    name: "DiscussionBoard",
   },
 ];
 

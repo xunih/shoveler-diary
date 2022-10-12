@@ -12,5 +12,8 @@
     <router-link :to="{ path: '/calendar' }"
       ><button>Calendar</button></router-link
     >
+    <router-link :to="{ path: '/discussion' }"
+      ><button>Dicussion</button></router-link
+    >
   </div>
 </template>

@@ -32,6 +32,7 @@ export default {
       userId: "",
       profileId: null,
       post: [],
+      discussion: [],
     });
     const createUser = () => {
       if (user.email !== "" && user.password !== "") {
@@ -39,6 +40,7 @@ export default {
           email: user.email,
           password: user.password,
           post: user.post,
+          discussion: user.discussion,
         };
 
         Api.post("/users", newUser)
