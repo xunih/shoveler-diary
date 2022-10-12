@@ -15,5 +15,8 @@
     <router-link :to="{ path: '/discussion' }"
       ><button>Dicussion</button></router-link
     >
+    <router-link :to="{ path: '/posts' }"
+      ><button>All posts</button></router-link
+    >
   </div>
 </template>
