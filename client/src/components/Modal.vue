@@ -12,41 +12,40 @@
           class="border-b text-blue-500 border-gray-100 w-full px-6 py-3 hover:bg-gray-100"
         >
           Title:
-          <input v-model="event.title" placeholder="title" />
+          <input v-model="addedEvent.title" placeholder="title" />
         </li>
 
         <li
           class="border-b text-blue-500 border-gray-100 w-full px-6 py-3 hover:bg-gray-100"
         >
           Start time:
-          <input v-model="event.startTime" placeholder="start time" />
+          <input v-model="addedEvent.startTime" placeholder="start time" />
         </li>
         <li
           class="w-full text-red-500 px-6 py-3 rounded-b-lg hover:bg-gray-100"
         >
           End time:
-          <input v-model="event.endTime" placeholder="end time" />
+          <input v-model="addedEvent.endTime" placeholder="end time" />
         </li>
+        <button @click="addEvent">Add</button>
       </ul>
     </div>
   </div>
 </template>
 
 <script>
-import { reactive } from "vue";
+import { reactive, defineEmits } from "vue";
 export default {
-  setup() {
-    let event = reactive({
+  setup(props, { emit }) {
+    let addedEvent = reactive({
       title: "",
       startTime: "",
       endTime: "",
     });
-    return { event };
-  },
-  watch: {
-    title: function (val) {
-      this.$emit("update:title", val);
-    },
+    const addEvent = () => {
+      emit("childToParent", addedEvent);
+    };
+    return { addedEvent, addEvent };
   },
 };
 </script>
