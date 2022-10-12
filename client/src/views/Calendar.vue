@@ -4,10 +4,12 @@ import FullCalendar from "@fullcalendar/vue3";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { INITIAL_EVENTS, createEventId } from "../event-utilis.js";
+import { createEventId } from "../event-utilis.js";
+import Modal from "../components/Modal.vue";
 export default {
   components: {
-    FullCalendar, // make the <FullCalendar> tag available
+    FullCalendar,
+    Modal,
   },
   data: function () {
     return {
@@ -47,6 +49,8 @@ export default {
         userId: "",
         eventId: "",
       },
+      ifAdded: false,
+      calendarApi: null,
     };
   },
   methods: {
@@ -54,39 +58,9 @@ export default {
       this.calendarOptions.weekends = !this.calendarOptions.weekends; // update a property
     },
     handleDateSelect(selectInfo) {
-      let title = prompt("Please enter a new title for your event");
-      let startTime = prompt("Please enter a start time for your event");
-      let endTime = prompt("Please enter a end time for your event");
-      let calendarApi = selectInfo.view.calendar;
-      calendarApi.unselect(); // clear date selection
-      if (title) {
-        calendarApi.addEvent({
-          id: createEventId(),
-          title,
-          start: new Date(startTime),
-          end: new Date(endTime),
-          allDay: false,
-        });
-        console.log(new Date(startTime));
-        console.log(new Date(endTime));
-        this.calendarEvent.title = title;
-        this.calendarEvent.startTime = new Date(startTime);
-        this.calendarEvent.endTime = new Date(endTime);
-        var newEvent = {
-          title: this.calendarEvent.title,
-          startTime: this.calendarEvent.startTime,
-          endTime: this.calendarEvent.endTime,
-        };
-        Api.post(`/users/${localStorage.userId}/events/`, newEvent)
-          .then((response) => {
-            this.calendarEvent.userId = localStorage.userId;
-            this.calendarEvent.eventId = response.data.event._id;
-            console.log(response.data);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
+      this.ifAdded = true;
+      this.calendarApi = selectInfo.view.calendar;
+      //calendarApi.unselect(); // clear date selection'
     },
     handleEventClick(clickInfo) {
       if (
@@ -95,10 +69,45 @@ export default {
         )
       ) {
         clickInfo.event.remove();
+        Api.delete(`/events/${this.calendarEvent.eventId}`)
+          .then((response) => {
+            console.log("Event deleted");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
     },
     handleEvents(events) {
       this.currentEvents = events;
+    },
+    addEvent(data) {
+      this.isAdded = false;
+      this.calendarEvent.title = data.title;
+      this.calendarEvent.startTime = data.startTime;
+      this.calendarEvent.endTime = data.endTime;
+      if (this.calendarEvent.title) {
+        this.calendarApi.addEvent({
+          id: createEventId(),
+          title: this.calendarEvent.title,
+          start: new Date(this.calendarEvent.startTime),
+          end: new Date(this.calendarEvent.endTime),
+          allDay: false,
+        });
+        var newEvent = {
+          title: this.calendarEvent.title,
+          startTime: this.calendarEvent.startTime,
+          endTime: this.calendarEvent.endTime,
+        };
+        Api.post(`/users/${localStorage.userId}/events/`, newEvent)
+          .then((response) => {
+            this.calendarEvent.userId = localStorage.userId;
+            this.calendarEvent.eventId = response.data.event.slice(-1);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     },
   },
 };
@@ -131,7 +140,7 @@ export default {
           <li v-for="event in currentEvents" :key="event.id">
             <b>{{ event.start }}</b>
             to
-            <b>{{ event.end}}</b>
+            <b>{{ event.end }}</b>
             <br />
             <i>{{ event.title }}</i>
           </li>
@@ -139,6 +148,10 @@ export default {
       </div>
     </div>
     <div class="demo-app-main">
+      <transition v-show="ifAdded" name="bounce" mode="out-in">
+        <Modal @childToParent="addEvent" />
+      </transition>
+
       <FullCalendar class="demo-app-calendar" :options="calendarOptions">
         <template v-slot:eventContent="arg">
           <b>{{ arg.timeText }}</b>
