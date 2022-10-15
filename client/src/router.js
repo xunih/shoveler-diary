@@ -7,6 +7,7 @@ import Calendar from "./views/Calendar.vue";
 import DiscussionBoard from "./views/DiscussionBoard.vue";
 import Posts from "./views/AllPosts.vue";
 import Profile from "./views/Profile.vue";
+import Discussions from "./views/AllDiscussions.vue"
 
 const routes = [
   { path: "/", component: Home, name: "Home" },
@@ -45,6 +46,11 @@ const routes = [
     component: Profile,
     name: "Profile",
     props: true,
+  },
+  {
+    path: "/discussions",
+    component: Discussions,
+    name: "AllDiscussions",
   },
 ];
 
