@@ -6,6 +6,7 @@ import UploadPost from "./views/UploadPost.vue";
 import Calendar from "./views/Calendar.vue";
 import DiscussionBoard from "./views/DiscussionBoard.vue";
 import Posts from "./views/AllPosts.vue";
+import Profile from "./views/Profile.vue";
 
 const routes = [
   { path: "/", component: Home, name: "Home" },
@@ -38,6 +39,12 @@ const routes = [
     path: "/posts",
     component: Posts,
     name: "AllPosts",
+  },
+  {
+    path: "/profile/:profileId",
+    component: Profile,
+    name: "Profile",
+    props: true,
   },
 ];
 

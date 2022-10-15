@@ -13,6 +13,9 @@
     <div v-if="isRegistered == true">
       <p>Welcome!</p>
       <router-link :to="{ path: '/' }"><button>Home</button></router-link>
+      <router-link :to="{ path: '/profile/' + user.profileId }"
+        ><button>My Profile</button></router-link
+      >
     </div>
   </section>
 </template>
