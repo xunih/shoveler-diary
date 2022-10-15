@@ -5,6 +5,8 @@
       Title: {{ discussion.title }} Description:
       {{ discussion.description }} Post date:
       {{ discussion.postDate }}
+      <input v-model="comment" placeholder="Add a comment" />
+      <button>Add</button>
     </div>
   </div>
 </template>
@@ -15,17 +17,13 @@ export default {
   data() {
     return {
       discussions: [],
+      comment: "",
     };
   },
   mounted() {
     Api.get("discussions")
       .then((response) => {
         this.discussions = response.data.discussions;
-        if (!this.discussions) {
-          for (let i = 0; i < this.disucssions.length - 1; i++) {
-            console.log(this.discussions[i].title);
-          }
-        }
       })
       .catch((error) => {
         console.log(error);

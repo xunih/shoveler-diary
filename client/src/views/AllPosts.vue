@@ -20,9 +20,6 @@ export default {
     Api.get("posts")
       .then((response) => {
         this.posts = response.data.posts;
-        for (let i = 0; i < this.posts.length - 1; i++) {
-          console.log(this.posts[i].title);
-        }
       })
       .catch((error) => {
         this.posts = [];
