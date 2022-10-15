@@ -21,12 +21,13 @@ export default {
     Api.get("discussions")
       .then((response) => {
         this.discussions = response.data.discussions;
-        for (let i = 0; i < this.disucssions.length - 1; i++) {
-          console.log(this.discussions[i].title);
+        if (!this.discussions) {
+          for (let i = 0; i < this.disucssions.length - 1; i++) {
+            console.log(this.discussions[i].title);
+          }
         }
       })
       .catch((error) => {
-        discussions = [];
         console.log(error);
       });
   },

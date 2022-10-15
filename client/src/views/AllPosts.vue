@@ -25,7 +25,7 @@ export default {
         }
       })
       .catch((error) => {
-        posts = [];
+        this.posts = [];
         console.log(error);
       });
   },
