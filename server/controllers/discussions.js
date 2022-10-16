@@ -67,4 +67,21 @@ router.put("/:id", function (req, res, next) {
   );
 });
 
+router.patch("/:id", function (req, res, next) {
+  var id = req.params.id;
+  Discussion.findById(id, function (err, discussion) {
+    if (err) {
+      return next(err);
+    }
+    if (discussion === null) {
+      return res.status(404).json({
+        message: "Discussion topic not found",
+      });
+    }
+    discussion.comment.push(req.body.comment);
+    discussion.save();
+    res.json(discussion);
+  });
+});
+
 module.exports = router;

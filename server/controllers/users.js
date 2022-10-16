@@ -3,7 +3,8 @@ var router = express.Router();
 var User = require("../models/user");
 var Profile = require("../models/profile");
 var Post = require("../models/post");
-var Event = require("../models/event")
+var Event = require("../models/event");
+var Discussion = require("../models/discussion");
 
 // Return a list of all users
 router.get("/", function (req, res, next) {
@@ -133,7 +134,33 @@ router.post("/:id/events", function (req, res, next) {
         });
       }
       user.event.push(event);
-      console.log(user.event)
+      console.log(user.event);
+      user.save();
+      res.status(201).json(user);
+    })
+  );
+});
+
+router.post("/:id/discussions", function (req, res, next) {
+  var discussion = new Discussion(req.body);
+  var id = req.params.id;
+  discussion.save(
+    function (err) {
+      if (err) {
+        return next(err);
+      }
+    },
+    User.findById(id, function (err, user) {
+      if (err) {
+        return next(err);
+      }
+      if (user === null) {
+        return res.status(404).json({
+          message: "User not found",
+        });
+      }
+      user.discussion.push(discussion);
+      console.log(user.discussion);
       user.save();
       res.status(201).json(user);
     })

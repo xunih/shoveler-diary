@@ -13,6 +13,9 @@
     <div v-if="isRegistered == true">
       <p>Welcome!</p>
       <router-link :to="{ path: '/' }"><button>Home</button></router-link>
+      <router-link :to="{ path: '/profile/' + user.profileId }"
+        ><button>My Profile</button></router-link
+      >
     </div>
   </section>
 </template>
@@ -32,6 +35,7 @@ export default {
       userId: "",
       profileId: null,
       post: [],
+      discussion: [],
     });
     const createUser = () => {
       if (user.email !== "" && user.password !== "") {
@@ -39,6 +43,7 @@ export default {
           email: user.email,
           password: user.password,
           post: user.post,
+          discussion: user.discussion,
         };
 
         Api.post("/users", newUser)

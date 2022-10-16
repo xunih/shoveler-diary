@@ -36,10 +36,10 @@ var userSchema = new Schema({
       ref: "posts",
     },
   ],
-  discussion: {
+  discussion: [{
     type: Schema.Types.ObjectId,
     ref: "discussions",
-  },
+  }],
 });
 
 userSchema.pre("save", function (next) {
