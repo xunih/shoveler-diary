@@ -2,12 +2,13 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import Home from "./views/Home.vue";
 import Register from "./views/Registration.vue";
 import LogIn from "./views/Login.vue";
-import UploadPost from "./views/UploadPost.vue";
+import CreatePost from "./views/CreatePost.vue";
 import Calendar from "./views/Calendar.vue";
-import DiscussionBoard from "./views/DiscussionBoard.vue";
+import CreateDiscussion from "./views/CreateDiscussion.vue";
 import Posts from "./views/AllPosts.vue";
 import Profile from "./views/Profile.vue";
-import Discussions from "./views/AllDiscussions.vue"
+import Discussions from "./views/AllDiscussions.vue";
+import Discussion from "./views/Discussion.vue";
 
 const routes = [
   { path: "/", component: Home, name: "Home" },
@@ -23,8 +24,8 @@ const routes = [
   },
   {
     path: "/post",
-    component: UploadPost,
-    name: "UploadPost",
+    component: CreatePost,
+    name: "CreatePost",
   },
   {
     path: "/calendar",
@@ -33,8 +34,8 @@ const routes = [
   },
   {
     path: "/discussion",
-    component: DiscussionBoard,
-    name: "DiscussionBoard",
+    component: CreateDiscussion,
+    name: "CreateDiscussion",
   },
   {
     path: "/posts",
@@ -51,6 +52,12 @@ const routes = [
     path: "/discussions",
     component: Discussions,
     name: "AllDiscussions",
+  },
+  {
+    path: "/discussion/:discussionId",
+    component: Discussion,
+    name: "Discussion",
+    props: true,
   },
 ];
 

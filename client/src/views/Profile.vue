@@ -27,9 +27,6 @@ export default {
           profile = "";
           console.log(error);
         })
-        .then(() => {
-          // This code is always executed (after success or error).
-        });
     });
 
     return {

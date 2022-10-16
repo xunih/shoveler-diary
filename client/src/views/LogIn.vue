@@ -49,6 +49,7 @@ export default {
           for (var i = 0; i < response.data.users.length; i++) {
             if (user.email === response.data.users[i].email) {
               user.userId = response.data.users[i]._id;
+              console.log(response.data.users[i]);
               user.profileId = response.data.users[i].profile;
               console.log(response.data.users[i]);
               user.post = response.data.users[i].post;

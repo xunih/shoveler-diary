@@ -2,13 +2,15 @@
   <div>
     <h1>All Discussions</h1>
     <div v-for="discussion in discussions" :key="discussion._id">
-      Title: {{ discussion.title }} Description:
-      {{ discussion.description }} Post date:
-      {{ discussion.postDate }} Comments: {{ discussion.comment }}
-      <input v-model="discussion.comment" placeholder="Add a comment" />
+      Title: {{ discussion.title }} Post date:
+      {{ discussion.postDate }}
+      <!--textarea v-model="discussion.comment" placeholder="Add a comment" />
       <button @click="addComment(discussion._id, discussion.comment)">
         Add
-      </button>
+      </button-->
+      <router-link :to="{ path: '/discussion/' + discussion._id }"
+        ><button>View details</button></router-link
+      >
     </div>
   </div>
 </template>
@@ -19,7 +21,6 @@ export default {
   data() {
     return {
       discussions: [],
-      comment: "",
     };
   },
   mounted() {
@@ -31,6 +32,7 @@ export default {
         console.log(error);
       });
   },
+  /*
   methods: {
     addComment(discussionId, discussionComment) {
       var newDiscussion = {
@@ -56,6 +58,6 @@ export default {
           console.log(error);
         });
     },
-  },
+  },*/
 };
 </script>

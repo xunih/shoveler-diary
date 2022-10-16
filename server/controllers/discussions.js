@@ -78,8 +78,6 @@ router.patch("/:id", function (req, res, next) {
         message: "Discussion topic not found",
       });
     }
-    console.log("look here")
-    console.log(req.body.comment);
     discussion.comment.push(req.body.comment);
     discussion.save();
     res.json(discussion);
