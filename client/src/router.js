@@ -9,6 +9,7 @@ import Posts from "./views/AllPosts.vue";
 import Profile from "./views/Profile.vue";
 import Discussions from "./views/AllDiscussions.vue";
 import Discussion from "./views/Discussion.vue";
+import MyPost from "./views/MyPosts.vue";
 
 const routes = [
   { path: "/", component: Home, name: "Home" },
@@ -58,6 +59,11 @@ const routes = [
     component: Discussion,
     name: "Discussion",
     props: true,
+  },
+  {
+    path: "/my-post",
+    component: MyPost,
+    name: "MyPost",
   },
 ];
 

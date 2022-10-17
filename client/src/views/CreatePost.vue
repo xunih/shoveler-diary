@@ -10,7 +10,7 @@
       <input v-model="post.title" placeholder="title" />
       <br />
       <p>Description</p>
-      <input v-model="post.description" placeholder="description" />
+      <textarea v-model="post.description" placeholder="description" />
       <div
         class="previewBlock"
         :style="{ 'background-image': `url(${filePreview})` }"
@@ -67,7 +67,6 @@ export default {
             isPosted.value = true;
             post.userId = localStorage.userId;
             post.postId = response.data.post._id;
-            console.log(response.data);
           })
           .catch((error) => {
             console.log(error);
@@ -89,14 +88,6 @@ export default {
         reader.readAsDataURL(imgFile[0]);
       }
     };
-    /*const data = new FormData();
-      data.append("name", "my-picture");
-      data.append("file", event.target.files[0]);
-      const config = {
-        header: {
-          "Content-Type": "image/png",
-        },
-      };*/
 
     return { isPosted, post, createPost, uploadImage, fileInput, filePreview };
   },
