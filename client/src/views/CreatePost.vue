@@ -11,9 +11,21 @@
       <br />
       <p>Description</p>
       <input v-model="post.description" placeholder="description" />
-      <!-- <p>Sign your post</p>
-      <input v-model="signature" placeholder="your email" /> -->
-
+      <div
+        class="previewBlock"
+        :style="{ 'background-image': `url(${filePreview})` }"
+      ></div>
+      <div>
+        <label for="image">Upload Image</label>
+        <input
+          type="file"
+          ref="fileInput"
+          id="image"
+          name="image"
+          value=""
+          @change="uploadImage"
+        />
+      </div>
       <div>
         <button @click="createPost">Post</button>
         Post
@@ -34,12 +46,13 @@ export default {
     let post = reactive({
       title: "",
       description: "",
+      images: [],
       userId: "",
       postId: "",
     });
+    let filePreview = ref("");
+    let fileInput = ref(null);
     const createPost = () => {
-      console.log(post.title);
-      console.log(post.description);
       if (post.title !== "" && post.description !== "") {
         console.log("inside create post");
         // creates a new post object
@@ -60,7 +73,40 @@ export default {
           });
       }
     };
-    return { isPosted, post, createPost };
+
+    const uploadImage = (e) => {
+      let imgFile = fileInput.value.files;
+      if (imgFile && imgFile[0]) {
+        console.log("hey");
+        let reader = new FileReader();
+        reader.onload = (e) => {
+          filePreview.value = e.target.result;
+        };
+        reader.readAsDataURL(imgFile[0]);
+      }
+    };
+    /*const data = new FormData();
+      data.append("name", "my-picture");
+      data.append("file", event.target.files[0]);
+      const config = {
+        header: {
+          "Content-Type": "image/png",
+        },
+      };*/
+
+    return { isPosted, post, createPost, uploadImage, fileInput, filePreview };
   },
 };
 </script>
+
+<style>
+.previewBlock {
+  display: block;
+  cursor: pointer;
+  width: 300px;
+  height: 280px;
+  margin: 0 auto 20px;
+  background-position: center center;
+  background-size: cover;
+}
+</style>
