@@ -1,8 +1,8 @@
 const express = require("express");
 var mongoose = require("mongoose");
 var bodyParser = require("body-parser");
-var morgan = require('morgan');
-var cors = require('cors');
+var morgan = require("morgan");
+var cors = require("cors");
 require("dotenv/config");
 
 var usersController = require("./controllers/users");
@@ -27,9 +27,9 @@ mongoose.connect(mongoURI, { useNewUrlParser: true }, function (err) {
 });
 
 const app = express();
-app.use(bodyParser.json());
-app.use(morgan('dev'));
-app.options('*', cors());
+app.use(bodyParser.json({ limit: "5mb" }));
+app.use(morgan("dev"));
+app.options("*", cors());
 app.use(cors());
 
 app.get("/api", (req, res) => res.send("We are on posts"));
@@ -40,8 +40,8 @@ app.use("/api/events", eventsController);
 app.use("/api/posts", postsController);
 app.use("/api/discussions", discussionController);
 
-app.use('/api/*', function (req, res) {
-  res.status(404).json({ 'message': 'Not Found' });
+app.use("/api/*", function (req, res) {
+  res.status(404).json({ message: "Not Found" });
 });
 
 app.listen(port);

@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var postSchema = new Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
-  image: { data: Buffer, contentType: String },
+  image: { type: String },
   postDate: { type: Date, default: Date.now },
   ifLiked: { type: Boolean },
 });

@@ -46,7 +46,7 @@ export default {
     let post = reactive({
       title: "",
       description: "",
-      images: [],
+      imageUrl: "",
       userId: "",
       postId: "",
     });
@@ -59,6 +59,7 @@ export default {
         var newPost = {
           title: post.title,
           description: post.description,
+          image: post.imageUrl,
         };
         // creates a new post
         Api.post(`/users/${localStorage.userId}/posts/`, newPost)
@@ -76,11 +77,14 @@ export default {
 
     const uploadImage = (e) => {
       let imgFile = fileInput.value.files;
+      console.log(imgFile);
+      console.log(imgFile[0]);
+
       if (imgFile && imgFile[0]) {
-        console.log("hey");
         let reader = new FileReader();
         reader.onload = (e) => {
           filePreview.value = e.target.result;
+          post.imageUrl = filePreview.value;
         };
         reader.readAsDataURL(imgFile[0]);
       }

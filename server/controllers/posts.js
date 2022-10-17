@@ -1,19 +1,6 @@
 var express = require("express");
 var router = express.Router();
 var Post = require("../models/post");
-var multer = require("multer");
-var fs = require("fs");
-var path = require("path");
-var storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.fieldname + "-" + Date.now());
-  },
-});
-
-var upload = multer({ storage: storage });
 
 // Return a list of all posts
 router.get("/", function (req, res, next) {
@@ -21,22 +8,15 @@ router.get("/", function (req, res, next) {
     if (err) {
       return next(err);
     }
-    res.render("imagesPage", { posts: posts });
+    res.json({
+      posts: posts,
+    });
   });
 });
 
 // Create a new post
-router.post("/", upload.single("image"), function (req, res, next) {
-  var post = {
-    title: req.body.title,
-    description: req.body.description,
-    image: {
-      data: fs.readFileSync(
-        path.join(__dirname + "/uploads/" + req.file.filename)
-      ),
-      contentType: "image/png",
-    },
-  };
+router.post("/", function (req, res, next) {
+  var post = new Post(req.body);
   post.save(function (err) {
     if (err) {
       return next(err);
