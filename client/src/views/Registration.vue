@@ -3,7 +3,7 @@
     <form v-if="isRegistered == false" class="ui form">
       <EmailField v-model="user.email" /><PasswordField
         v-model="user.password"
-      />
+      /><input v-model="user.username" />
       <button @click="createUser">Sign Up</button>
     </form>
     <p v-if="isError == true && isRegistered == false">
@@ -32,6 +32,7 @@ export default {
     let user = reactive({
       email: "",
       password: "",
+      username: "",
       userId: "",
       profileId: null,
       post: [],
@@ -52,7 +53,7 @@ export default {
             isRegistered.value = true;
             user.userId = response.data._id;
             var newProfile = {
-              username: response.data.email,
+              username: user.username,
             };
 
             Api.post("/users/" + user.userId + "/profiles", newProfile).then(

@@ -22,6 +22,7 @@ var userSchema = new Schema({
     ],
   },
   password: { type: String, required: true },
+  username: { type: String },
   profile: { type: Schema.Types.ObjectId, ref: "profiles" },
   pet: { type: Schema.Types.ObjectId, ref: "pets" },
   event: [
@@ -36,10 +37,12 @@ var userSchema = new Schema({
       ref: "posts",
     },
   ],
-  discussion: [{
-    type: Schema.Types.ObjectId,
-    ref: "discussions",
-  }],
+  discussion: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "discussions",
+    },
+  ],
 });
 
 userSchema.pre("save", function (next) {
