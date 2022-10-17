@@ -6,6 +6,7 @@
       v-if="editIsClicked == true"
       v-model="username"
       @change="getNewUsername"
+      :placeholder="profile.username"
     />
     <button @click="changeUsername">Edit</button>
     <button v-if="editIsClicked == true" @click="updateUsername">Save</button>
