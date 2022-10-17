@@ -18,8 +18,6 @@
 
 <script>
 import { Api } from "../Api";
-import { reactive, ref } from "vue";
-import { onMounted } from "@vue/runtime-core";
 export default {
   data() {
     return {

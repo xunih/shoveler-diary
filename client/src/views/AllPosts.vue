@@ -8,7 +8,7 @@
         class="previewBlock"
         :style="{ 'background-image': `url(${post.image})` }"
       ></div>
-    </div>
+    </div>§
   </div>
 </template>
 
