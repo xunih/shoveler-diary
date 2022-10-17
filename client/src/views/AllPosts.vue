@@ -4,7 +4,11 @@
     <div v-for="post in posts" :key="post._id">
       Title: {{ post.title }} Description: {{ post.description }} Post date:
       {{ post.postDate }}
-    </div>
+      <div
+        class="previewBlock"
+        :style="{ 'background-image': `url(${post.image})` }"
+      ></div>
+    </div>§
   </div>
 </template>
 
@@ -28,3 +32,15 @@ export default {
   },
 };
 </script>
+
+<style>
+.previewBlock {
+  display: block;
+  cursor: pointer;
+  width: 300px;
+  height: 280px;
+  margin: 0 auto 20px;
+  background-position: center center;
+  background-size: cover;
+}
+</style>

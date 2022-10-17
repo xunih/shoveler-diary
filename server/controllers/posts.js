@@ -8,13 +8,14 @@ router.get("/", function (req, res, next) {
     if (err) {
       return next(err);
     }
-    res.json({ posts: posts });
+    res.json({
+      posts: posts,
+    });
   });
 });
 
 // Create a new post
 router.post("/", function (req, res, next) {
-  console.log(req.body);
   var post = new Post(req.body);
   post.save(function (err) {
     if (err) {

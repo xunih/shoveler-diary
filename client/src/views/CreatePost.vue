@@ -10,10 +10,22 @@
       <input v-model="post.title" placeholder="title" />
       <br />
       <p>Description</p>
-      <input v-model="post.description" placeholder="description" />
-      <!-- <p>Sign your post</p>
-      <input v-model="signature" placeholder="your email" /> -->
-
+      <textarea v-model="post.description" placeholder="description" />
+      <div
+        class="previewBlock"
+        :style="{ 'background-image': `url(${filePreview})` }"
+      ></div>
+      <div>
+        <label for="image">Upload Image</label>
+        <input
+          type="file"
+          ref="fileInput"
+          id="image"
+          name="image"
+          value=""
+          @change="uploadImage"
+        />
+      </div>
       <div>
         <button @click="createPost">Post</button>
         Post
@@ -34,18 +46,20 @@ export default {
     let post = reactive({
       title: "",
       description: "",
+      imageUrl: "",
       userId: "",
       postId: "",
     });
+    let filePreview = ref("");
+    let fileInput = ref(null);
     const createPost = () => {
-      console.log(post.title);
-      console.log(post.description);
       if (post.title !== "" && post.description !== "") {
         console.log("inside create post");
         // creates a new post object
         var newPost = {
           title: post.title,
           description: post.description,
+          image: post.imageUrl,
         };
         // creates a new post
         Api.post(`/users/${localStorage.userId}/posts/`, newPost)
@@ -53,14 +67,41 @@ export default {
             isPosted.value = true;
             post.userId = localStorage.userId;
             post.postId = response.data.post._id;
-            console.log(response.data);
           })
           .catch((error) => {
             console.log(error);
           });
       }
     };
-    return { isPosted, post, createPost };
+
+    const uploadImage = (e) => {
+      let imgFile = fileInput.value.files;
+      console.log(imgFile);
+      console.log(imgFile[0]);
+
+      if (imgFile && imgFile[0]) {
+        let reader = new FileReader();
+        reader.onload = (e) => {
+          filePreview.value = e.target.result;
+          post.imageUrl = filePreview.value;
+        };
+        reader.readAsDataURL(imgFile[0]);
+      }
+    };
+
+    return { isPosted, post, createPost, uploadImage, fileInput, filePreview };
   },
 };
 </script>
+
+<style>
+.previewBlock {
+  display: block;
+  cursor: pointer;
+  width: 300px;
+  height: 280px;
+  margin: 0 auto 20px;
+  background-position: center center;
+  background-size: cover;
+}
+</style>

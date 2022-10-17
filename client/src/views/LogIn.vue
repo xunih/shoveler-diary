@@ -13,6 +13,13 @@
       <router-link :to="{ path: '/profile/' + user.profileId }"
         ><button>My Profile</button></router-link
       >
+      <router-link
+        :to="{
+          path: '/my-post/',
+          params: user.userId,
+        }"
+        ><button>My Posts</button></router-link
+      >
     </div>
   </section>
 </template>
