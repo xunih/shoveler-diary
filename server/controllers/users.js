@@ -17,7 +17,7 @@ router.get("/", function (req, res, next) {
 });
 
 // Create a new user
-router.post("/", function (req, res, next) {
+router.post("/signup", function (req, res, next) {
   console.log(req.body);
   var user = new User(req.body);
   user.save(function (err) {
@@ -25,6 +25,24 @@ router.post("/", function (req, res, next) {
       return next(err);
     }
     res.status(201).json(user);
+  });
+});
+
+router.post("/login", function (req, res, next) {
+  User.findOne({ email: req.body.email }, function (err, user) {
+    if (err) throw err;
+    if (user) {
+      console.log("inside compare");
+      user.comparePassword(req.body.password, function (err, isMatch) {
+        if (err) throw err;
+        console.log("The entered password is :", isMatch);
+        if (isMatch) {
+          res.status(201).send("Log in successfully");
+        } else {
+          res.status(403).send("Password incorrect");
+        }
+      });
+    }
   });
 });
 

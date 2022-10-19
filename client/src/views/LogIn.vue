@@ -21,6 +21,7 @@
         ><button>My Posts</button></router-link
       >
     </div>
+    <div v-else-if="loginFailed == true"><p>Email and password not macthed!</p></div>
   </section>
 </template>
 
@@ -37,6 +38,7 @@ export default {
   },
   setup() {
     let isLoggedIn = ref(false);
+    let loginFailed = ref(false);
     let user = reactive({
       email: "",
       password: "",
@@ -52,32 +54,27 @@ export default {
       } else {
         //user.isEmpty = false
         console.log("hello");
-        Api.get("/users").then((response) => {
-          for (var i = 0; i < response.data.users.length; i++) {
-            if (user.email === response.data.users[i].email) {
-              user.userId = response.data.users[i]._id;
-              console.log(response.data.users[i]);
-              user.profileId = response.data.users[i].profile;
-              console.log(response.data.users[i]);
-              user.post = response.data.users[i].post;
-              login();
-              break;
-            }
-          }
-        });
+        var loginUser = {
+          email: user.email,
+          password: user.password,
+        };
+        Api.post("/users/login", loginUser)
+          .then((response) => {
+            isLoggedIn.value = true;
+            console.log(response);
+          })
+          .catch((error) => {
+            loginFailed.value = true;
+            console.log(error);
+          });
       }
     };
-    const login = () => {
-      localStorage.userId = user.userId;
-      localStorage.email = user.email;
-      isLoggedIn.value = true;
-      console.log(isLoggedIn);
-    };
+
     return {
       user,
       loginButtonPressed,
-      login,
       isLoggedIn,
+      loginFailed,
     };
   },
 };

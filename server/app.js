@@ -1,6 +1,7 @@
 const express = require("express");
 var mongoose = require("mongoose");
 var bodyParser = require("body-parser");
+const jwt = require('jsonwebtoken');
 var morgan = require("morgan");
 var cors = require("cors");
 require("dotenv/config");
