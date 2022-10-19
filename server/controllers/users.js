@@ -5,6 +5,7 @@ var Profile = require("../models/profile");
 var Post = require("../models/post");
 var Event = require("../models/event");
 var Discussion = require("../models/discussion");
+const jwt = require("jsonwebtoken");
 
 // Return a list of all users
 router.get("/", function (req, res, next) {
@@ -24,7 +25,17 @@ router.post("/signup", function (req, res, next) {
     if (err) {
       return next(err);
     }
-    res.status(201).json(user);
+    const accessToken = jwt.sign(
+      { email: user.email, password: user.password },
+      process.env.JWT_SECRET
+    );
+    res.status(201).json({
+      status: "success",
+      accessToken,
+      data: {
+        user,
+      },
+    });
   });
 });
 
@@ -32,7 +43,6 @@ router.post("/login", function (req, res, next) {
   User.findOne({ email: req.body.email }, function (err, user) {
     if (err) throw err;
     if (user) {
-      console.log("inside compare");
       user.comparePassword(req.body.password, function (err, isMatch) {
         if (err) throw err;
         console.log("The entered password is :", isMatch);
