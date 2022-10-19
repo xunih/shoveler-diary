@@ -8,7 +8,6 @@ var Discussion = require("../models/discussion");
 const jwt = require("jsonwebtoken");
 var { authenticateJWT } = require("../authorizationVerification");
 
-
 // Return a list of all users
 router.get("/", function (req, res, next) {
   User.find(function (err, users) {
@@ -30,7 +29,7 @@ router.post("/signup", function (req, res, next) {
     const accessToken = jwt.sign(
       { email: user.email, password: user.password },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: process.env.JWT_EXPIRES_IN }
     );
     console.log(accessToken);
     res.status(201).json({
