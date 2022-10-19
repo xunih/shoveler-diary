@@ -7,26 +7,7 @@ var Event = require("../models/event");
 var Discussion = require("../models/discussion");
 const jwt = require("jsonwebtoken");
 var { authenticateJWT } = require("../authorizationVerification");
-/*
-const jwt = require("jsonwebtoken");
 
-const authenticateJWT = (req, res, next) => {
-  const authHeader = req.headers.authorization;
-  console.log(req.headers.authorization);
-  if (authHeader) {
-    const token = authHeader.split(" ")[1];
-    console.log(req.headers);
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-      if (err) {
-        return res.sendStatus(403);
-      }
-      req.user = user;
-      next();
-    });
-  } else {
-    res.sendStatus(401);
-  }
-};*/
 
 // Return a list of all users
 router.get("/", function (req, res, next) {
@@ -48,7 +29,8 @@ router.post("/signup", function (req, res, next) {
     }
     const accessToken = jwt.sign(
       { email: user.email, password: user.password },
-      process.env.JWT_SECRET
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
     );
     console.log(accessToken);
     res.status(201).json({
@@ -61,7 +43,7 @@ router.post("/signup", function (req, res, next) {
   });
 });
 
-router.post("/login", authenticateJWT, function (req, res, next) {
+router.post("/login", function (req, res, next) {
   User.findOne({ email: req.body.email }, function (err, user) {
     if (err) throw err;
     if (user) {
@@ -69,13 +51,18 @@ router.post("/login", authenticateJWT, function (req, res, next) {
         if (err) throw err;
         console.log("The entered password is :", isMatch);
         if (isMatch) {
-          /*
-          const token = jwt.sign(
+          const accessToken = jwt.sign(
             { email: user.email, password: user.password },
-            process.env.JWT_SECRET
+            process.env.JWT_SECRET,
+            { expiresIn: process.env.JWT_EXPIRES_IN }
           );
-          res.status(200).header("auth-token", token).send({ "token": token });*/
-          res.status(201).json(user);
+          res.status(201).json({
+            status: "success",
+            accessToken,
+            data: {
+              user,
+            },
+          });
         } else {
           res.status(403).send("Password incorrect");
         }

@@ -15,8 +15,7 @@
       >
       <router-link
         :to="{
-          path: '/my-post/',
-          params: user.userId,
+          path: '/my-post',
         }"
         ><button>My Posts</button></router-link
       >
@@ -62,9 +61,12 @@ export default {
         };
         Api.post("/users/login", loginUser)
           .then((response) => {
+            user.userId = response.data.data.user._id;
+            localStorage.accessToken = response.data.accessToken;
+            console.log(localStorage.accessToken);
             isLoggedIn.value = true;
             console.log(response);
-            localStorage.userId = response.data._id;
+            localStorage.userId = user.userId;
             console.log(localStorage.userId);
           })
           .catch((error) => {
