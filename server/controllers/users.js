@@ -6,6 +6,9 @@ var Post = require("../models/post");
 var Event = require("../models/event");
 var Discussion = require("../models/discussion");
 const jwt = require("jsonwebtoken");
+var { authenticateJWT } = require("../authorizationVerification");
+/*
+const jwt = require("jsonwebtoken");
 
 const authenticateJWT = (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -23,7 +26,7 @@ const authenticateJWT = (req, res, next) => {
   } else {
     res.sendStatus(401);
   }
-};
+};*/
 
 // Return a list of all users
 router.get("/", function (req, res, next) {
