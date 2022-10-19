@@ -47,7 +47,7 @@ export default {
           discussion: user.discussion,
         };
 
-        Api.post("/users", newUser)
+        Api.post("/users/signup", newUser)
           .then((response) => {
             user.userId = response.data._id;
             isRegistered.value = true;
@@ -59,6 +59,7 @@ export default {
             Api.post("/users/" + user.userId + "/profiles", newProfile).then(
               (response) => {
                 user.profileId = response.data.profile._id;
+                localStorage.userId = user.userId;
               }
             );
           })

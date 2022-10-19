@@ -21,7 +21,9 @@
         ><button>My Posts</button></router-link
       >
     </div>
-    <div v-else-if="loginFailed == true"><p>Email and password not macthed!</p></div>
+    <div v-else-if="loginFailed == true">
+      <p>Email and password not macthed!</p>
+    </div>
   </section>
 </template>
 
@@ -62,6 +64,8 @@ export default {
           .then((response) => {
             isLoggedIn.value = true;
             console.log(response);
+            localStorage.userId = response.data._id;
+            console.log(localStorage.userId);
           })
           .catch((error) => {
             loginFailed.value = true;

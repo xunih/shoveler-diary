@@ -37,7 +37,7 @@ router.post("/login", function (req, res, next) {
         if (err) throw err;
         console.log("The entered password is :", isMatch);
         if (isMatch) {
-          res.status(201).send("Log in successfully");
+          res.status(201).json(user);
         } else {
           res.status(403).send("Password incorrect");
         }
