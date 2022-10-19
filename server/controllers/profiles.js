@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var Profile = require("../models/profile");
+var { authenticateJWT } = require("../authorizationVerification");
 
 // Return a list of all profiles
 router.get("/", function (req, res, next) {
@@ -49,7 +50,7 @@ router.get("/:id", function (req, res, next) {
 
 // Partially update the profile with the given ID
 // User can update their profile picture, bio and location on their profile page
-router.patch("/:id", function (req, res, next) {
+router.patch("/:id", authenticateJWT, function (req, res, next) {
   var id = req.params.id;
   Profile.findById(id, function (err, profile) {
     if (err) {

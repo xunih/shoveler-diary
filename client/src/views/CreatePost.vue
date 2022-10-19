@@ -62,6 +62,7 @@ export default {
           image: post.imageUrl,
         };
         // creates a new post
+        console.log(localStorage.userId);
         Api.post(`/users/${localStorage.userId}/posts/`, newPost)
           .then((response) => {
             isPosted.value = true;

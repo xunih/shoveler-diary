@@ -47,11 +47,12 @@ export default {
           discussion: user.discussion,
         };
 
-        Api.post("/users", newUser)
+        Api.post("/users/signup", newUser)
           .then((response) => {
-            user.userId = response.data._id;
+            user.userId = response.data.data.user._id;
+            localStorage.accessToken = response.data.accessToken;
+            console.log(localStorage.accessToken)
             isRegistered.value = true;
-            user.userId = response.data._id;
             var newProfile = {
               username: user.username,
             };
@@ -59,6 +60,7 @@ export default {
             Api.post("/users/" + user.userId + "/profiles", newProfile).then(
               (response) => {
                 user.profileId = response.data.profile._id;
+                localStorage.userId = user.userId;
               }
             );
           })
