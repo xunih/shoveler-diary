@@ -49,8 +49,9 @@ export default {
 
         Api.post("/users/signup", newUser)
           .then((response) => {
-            console.log(response)
             user.userId = response.data.data.user._id;
+            localStorage.accessToken = response.data.accessToken;
+            console.log(localStorage.accessToken)
             isRegistered.value = true;
             var newProfile = {
               username: user.username,

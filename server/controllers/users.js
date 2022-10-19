@@ -7,6 +7,24 @@ var Event = require("../models/event");
 var Discussion = require("../models/discussion");
 const jwt = require("jsonwebtoken");
 
+const authenticateJWT = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  console.log(req.headers.authorization);
+  if (authHeader) {
+    const token = authHeader.split(" ")[1];
+    console.log(req.headers);
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+      if (err) {
+        return res.sendStatus(403);
+      }
+      req.user = user;
+      next();
+    });
+  } else {
+    res.sendStatus(401);
+  }
+};
+
 // Return a list of all users
 router.get("/", function (req, res, next) {
   User.find(function (err, users) {
@@ -29,6 +47,7 @@ router.post("/signup", function (req, res, next) {
       { email: user.email, password: user.password },
       process.env.JWT_SECRET
     );
+    console.log(accessToken);
     res.status(201).json({
       status: "success",
       accessToken,
@@ -39,7 +58,7 @@ router.post("/signup", function (req, res, next) {
   });
 });
 
-router.post("/login", function (req, res, next) {
+router.post("/login", authenticateJWT, function (req, res, next) {
   User.findOne({ email: req.body.email }, function (err, user) {
     if (err) throw err;
     if (user) {
@@ -47,6 +66,12 @@ router.post("/login", function (req, res, next) {
         if (err) throw err;
         console.log("The entered password is :", isMatch);
         if (isMatch) {
+          /*
+          const token = jwt.sign(
+            { email: user.email, password: user.password },
+            process.env.JWT_SECRET
+          );
+          res.status(200).header("auth-token", token).send({ "token": token });*/
           res.status(201).json(user);
         } else {
           res.status(403).send("Password incorrect");
@@ -57,7 +82,7 @@ router.post("/login", function (req, res, next) {
 });
 
 // Return the user with the given ID
-router.get("/:id", function (req, res, next) {
+router.get("/:id", authenticateJWT, function (req, res, next) {
   var id = req.params.id;
   User.findById(id, function (err, user) {
     if (err) {
@@ -79,7 +104,7 @@ router.get("/:id", function (req, res, next) {
 });
 
 // Delete the user with the given ID
-router.delete("/:id", function (req, res, next) {
+router.delete("/:id", authenticateJWT, function (req, res, next) {
   var id = req.params.id;
   User.findOneAndDelete({ _id: id }, function (err, user) {
     if (err) {
@@ -92,7 +117,9 @@ router.delete("/:id", function (req, res, next) {
   });
 });
 
-router.post("/:id/profiles", function (req, res, next) {
+router.post("/:id/profiles", authenticateJWT, function (req, res, next) {
+  console.log("Here");
+  console.log(req.headers);
   var profile = new Profile(req.body);
   var id = req.params.id;
   profile.save(
@@ -118,7 +145,7 @@ router.post("/:id/profiles", function (req, res, next) {
   );
 });
 
-router.post("/:id/posts", function (req, res, next) {
+router.post("/:id/posts", authenticateJWT, function (req, res, next) {
   var post = new Post(req.body);
   var id = req.params.id;
   post.save(
@@ -143,7 +170,7 @@ router.post("/:id/posts", function (req, res, next) {
   );
 });
 
-router.post("/:id/events", function (req, res, next) {
+router.post("/:id/events", authenticateJWT, function (req, res, next) {
   var event = new Event(req.body);
   var id = req.params.id;
   event.save(
@@ -169,7 +196,7 @@ router.post("/:id/events", function (req, res, next) {
   );
 });
 
-router.post("/:id/discussions", function (req, res, next) {
+router.post("/:id/discussions", authenticateJWT, function (req, res, next) {
   var discussion = new Discussion(req.body);
   var id = req.params.id;
   discussion.save(
@@ -194,4 +221,5 @@ router.post("/:id/discussions", function (req, res, next) {
     })
   );
 });
+
 module.exports = router;
