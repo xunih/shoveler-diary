@@ -3,7 +3,7 @@
     <form v-if="isRegistered == false" class="ui form">
       <EmailField v-model="user.email" /><PasswordField
         v-model="user.password"
-      /><input v-model="user.username" />
+      />
       <button @click="createUser">Sign Up</button>
     </form>
     <p v-if="isError == true && isRegistered == false">
@@ -11,11 +11,7 @@
       here.
     </p>
     <div v-if="isRegistered == true">
-      <p>Welcome!</p>
-      <router-link :to="{ path: '/' }"><button>Home</button></router-link>
-      <router-link :to="{ path: '/profile/' + user.profileId }"
-        ><button>My Profile</button></router-link
-      >
+      <p>{{ message }}</p>
     </div>
   </section>
 </template>
@@ -28,7 +24,7 @@ export default {
   setup() {
     let isRegistered = ref(false);
     let isError = ref(false);
-
+    let message = ref("");
     let user = reactive({
       email: "",
       password: "",
@@ -49,29 +45,19 @@ export default {
 
         Api.post("/users/signup", newUser)
           .then((response) => {
-            user.userId = response.data.data.user._id;
-            localStorage.accessToken = response.data.accessToken;
-            console.log(localStorage.accessToken)
+            user.userId = response.data._id;
             isRegistered.value = true;
-            var newProfile = {
-              username: user.username,
-            };
-
-            Api.post("/users/" + user.userId + "/profiles", newProfile).then(
-              (response) => {
-                user.profileId = response.data.profile._id;
-                localStorage.userId = user.userId;
-              }
-            );
+            console.log(response.data);
+            console.log(response.data.message);
+            message = response.data.message;
           })
-          .then()
           .catch((error) => {
             console.log("Error message " + error);
             isError.value = true;
           });
       }
     };
-    return { user, createUser, isError, isRegistered };
+    return { user, createUser, isError, isRegistered, message };
   },
   components: {
     EmailField,
