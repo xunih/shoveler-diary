@@ -1,7 +1,7 @@
 <template>
   <div class="posts">
     <h1>All Posts</h1>
-    <div v-for="post in posts" :key="post._id">
+    <div class="posts" v-for="post in posts" :key="post._id">
       Title: {{ post.title }} Description: {{ post.description }} Post date:
       {{ post.postDate }}
       <div
@@ -42,5 +42,15 @@ export default {
   margin: 0 auto 20px;
   background-position: center center;
   background-size: cover;
+}
+
+.posts {
+  text-align: center;
+  display: block;
+  height: auto;
+  width: 20%;
+  padding: 1%;
+  margin: 1%;
+  font-size: 90%;
 }
 </style>

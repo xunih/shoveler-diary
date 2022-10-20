@@ -63,15 +63,24 @@ export default {
           .then((response) => {
             user.userId = response.data.data.user._id;
             localStorage.accessToken = response.data.accessToken;
-            console.log(localStorage.accessToken);
-            isLoggedIn.value = true;
+            console.log("Received access token si");
             console.log(response);
+            isLoggedIn.value = true;
             localStorage.userId = user.userId;
-            console.log(localStorage.userId);
+            var newProfile = {
+              username: "heyhey",
+            };
+            Api.post("/users/" + user.userId + "/profile", newProfile).then(
+              (response) => {
+                user.profileId = response.data.profile._id;
+                localStorage.userId = user.userId;
+              }
+            );
           })
+          .then()
           .catch((error) => {
+            console.log("Error message " + error);
             loginFailed.value = true;
-            console.log(error);
           });
       }
     };

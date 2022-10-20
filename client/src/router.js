@@ -10,6 +10,7 @@ import Profile from "./views/Profile.vue";
 import Discussions from "./views/AllDiscussions.vue";
 import Discussion from "./views/Discussion.vue";
 import MyPost from "./views/MyPosts.vue";
+import Confirmation from "./views/Confirmation.vue"
 
 const routes = [
   { path: "/", component: Home, name: "Home" },
@@ -64,6 +65,12 @@ const routes = [
     path: "/my-post",
     component: MyPost,
     name: "MyPost",
+  },
+  {
+    path: "/verify/:confirmationCode",
+    component: Confirmation,
+    name: "Confirmation",
+    props: true,
   },
 ];
 

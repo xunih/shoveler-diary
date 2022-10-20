@@ -22,7 +22,6 @@ var userSchema = new Schema({
     ],
   },
   password: { type: String, required: true },
-  username: { type: String },
   profile: { type: Schema.Types.ObjectId, ref: "profiles" },
   pet: { type: Schema.Types.ObjectId, ref: "pets" },
   event: [
@@ -43,6 +42,15 @@ var userSchema = new Schema({
       ref: "discussions",
     },
   ],
+  status: {
+    type: String,
+    enum: ["Pending", "Active"],
+    default: "Pending",
+  },
+  confirmationCode: {
+    type: String,
+    unique: true,
+  },
 });
 
 userSchema.pre("save", function (next) {

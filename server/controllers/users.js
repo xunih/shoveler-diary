@@ -7,6 +7,7 @@ var Event = require("../models/event");
 var Discussion = require("../models/discussion");
 const jwt = require("jsonwebtoken");
 var { authenticateJWT } = require("../authorizationVerification");
+var { sendConfirmationEmail } = require("../nodemailer.config");
 
 // Return a list of all users
 router.get("/", function (req, res, next) {
@@ -21,34 +22,66 @@ router.get("/", function (req, res, next) {
 // Create a new user
 router.post("/signup", function (req, res, next) {
   console.log(req.body);
-  var user = new User(req.body);
+  const token = jwt.sign(
+    { email: req.body.email, password: req.body.password },
+    process.env.JWT_SECRET
+  );
+  const user = new User({
+    email: req.body.email,
+    password: req.body.password,
+    post: req.body.post,
+    discussion: req.body.discussion,
+    confirmationCode: token,
+  });
   user.save(function (err) {
     if (err) {
       return next(err);
     }
-    const accessToken = jwt.sign(
-      { email: user.email, password: user.password },
-      process.env.JWT_SECRET,
-      { expiresIn: process.env.JWT_EXPIRES_IN }
-    );
-    console.log(accessToken);
+    /*
     res.status(201).json({
-      status: "success",
-      accessToken,
-      data: {
-        user,
-      },
+      user,
+    });*/
+    res.status(201).send({
+      message: "Please verify your email!",
     });
+
+    sendConfirmationEmail(user.email, user.confirmationCode);
   });
+});
+
+router.get("/verify/:confirmationCode", function (req, res, next) {
+  User.findOne({
+    confirmationCode: req.params.confirmationCode,
+  })
+    .then((user) => {
+      if (!user) {
+        return res.status(404).send({ message: "User Not found." });
+      }
+
+      user.status = "Active";
+      user.save((err) => {
+        if (err) {
+          res.status(500).send({ message: err });
+          return;
+        } else {
+          res.status(201).send({ message: "Account verified" });
+        }
+      });
+    })
+    .catch((e) => console.log("error", e));
 });
 
 router.post("/login", function (req, res, next) {
   User.findOne({ email: req.body.email }, function (err, user) {
     if (err) throw err;
     if (user) {
+      if (user.status != "Active") {
+        return res.status(401).send({
+          message: "Pending Account. Please Verify Your Email!",
+        });
+      }
       user.comparePassword(req.body.password, function (err, isMatch) {
         if (err) throw err;
-        console.log("The entered password is :", isMatch);
         if (isMatch) {
           const accessToken = jwt.sign(
             { email: user.email, password: user.password },
@@ -93,7 +126,7 @@ router.get("/:id", authenticateJWT, function (req, res, next) {
 });
 
 // Delete the user with the given ID
-router.delete("/:id", authenticateJWT, function (req, res, next) {
+router.delete("/:id", function (req, res, next) {
   var id = req.params.id;
   User.findOneAndDelete({ _id: id }, function (err, user) {
     if (err) {
@@ -106,9 +139,9 @@ router.delete("/:id", authenticateJWT, function (req, res, next) {
   });
 });
 
-router.post("/:id/profiles", authenticateJWT, function (req, res, next) {
-  console.log("Here");
-  console.log(req.headers);
+router.post("/:id/profile", function (req, res, next) {
+  console.log("user name is ");
+  console.log(req.body);
   var profile = new Profile(req.body);
   var id = req.params.id;
   profile.save(
@@ -135,6 +168,7 @@ router.post("/:id/profiles", authenticateJWT, function (req, res, next) {
 });
 
 router.post("/:id/posts", authenticateJWT, function (req, res, next) {
+  console.log("insideh posts");
   var post = new Post(req.body);
   var id = req.params.id;
   post.save(
