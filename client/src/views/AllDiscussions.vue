@@ -1,16 +1,22 @@
 <template>
   <div>
     <h1>All Discussions</h1>
-    <div v-for="discussion in discussions" :key="discussion._id">
-      Title: {{ discussion.title }} Post date:
-      {{ discussion.postDate }}
-      <!--textarea v-model="discussion.comment" placeholder="Add a comment" />
-      <button @click="addComment(discussion._id, discussion.comment)">
-        Add
-      </button-->
-      <router-link :to="{ path: '/discussion/' + discussion._id }"
-        ><button>View details</button></router-link
+    <div class="discussion">
+      <div
+        class="list-group"
+        v-for="discussion in discussions"
+        :key="discussion._id"
       >
+        <router-link
+          class="link-style"
+          :to="{ path: '/discussion/' + discussion._id }"
+        >
+          <button type="button" class="list-group-item list-group-item-action">
+            Title: {{ discussion.title }} Post date:
+            {{ discussion.postDate }}
+          </button></router-link
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -61,3 +67,13 @@ export default {
   },*/
 };
 </script>
+
+<style>
+.link-style {
+  text-decoration: none;
+}
+
+.discussion {
+  width: 50em;
+}
+</style>

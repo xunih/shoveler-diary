@@ -17,12 +17,17 @@
     >
     <router-link :to="{ path: '/discussion' }"
       ><button type="button" class="btn btn-dark mr-2y rounded-0">
-        Dicussion
+        Create a dicussion
       </button></router-link
     >
     <router-link :to="{ path: '/posts' }"
       ><button type="button" class="btn btn-dark mr-2y rounded-0">
-        All posts
+        Posts
+      </button></router-link
+    >
+    <router-link :to="{ path: '/discussions' }"
+      ><button type="button" class="btn btn-dark mr-2 rounded-0">
+        Discussions
       </button></router-link
     >
   </div>

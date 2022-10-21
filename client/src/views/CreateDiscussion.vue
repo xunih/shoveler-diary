@@ -1,15 +1,37 @@
 <template>
   <div>
-    <h1>Dicussions</h1>
-
-    <div>
-      <p>Title</p>
-      <input v-model="discussion.title" placeholder="title" />
-      <br />
-      <p>Description</p>
-      <input v-model="discussion.description" placeholder="description" />
-    </div>
-    <button @click="createDiscussion">Save</button>
+    <h1>Create a new discussion</h1>
+  </div>
+  <div>
+    <form class="form">
+      <div class="form-group">
+        <label for="exampleFormControlInput1" class="form-label">Title</label>
+        <input
+          type="title"
+          class="form-control"
+          id="exampleFormControlInput1"
+          placeholder="title"
+          v-model="discussion.title"
+        />
+        <div class="space"></div>
+        <label for="exampleFormControlTextarea1" class="form-label"
+          >Description</label
+        >
+        <textarea
+          class="form-control"
+          id="exampleFormControlTextarea1"
+          rows="3"
+          placeholder="Description"
+          v-model="discussion.description"
+        />
+      </div>
+      <div class="space"></div>
+      <div class="text-center">
+        <button type="button" class="btn btn-dark" @click="createDiscussion">
+          Save
+        </button>
+      </div>
+    </form>
   </div>
 </template>
 

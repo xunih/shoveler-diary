@@ -1,7 +1,7 @@
 <template>
   <img id="Login" src="../../assets/mainpicture.jpeg" />
-  <div class="main">
-    <form v-if="isLoggedIn == false" class="form">
+  <div class="main-login">
+    <form v-if="isLoggedIn == false" class="form-login">
       <div class="form-group row">
         <div class="col-sm-10">
           <input
@@ -13,7 +13,7 @@
           />
         </div>
       </div>
-      <div class="space"></div>
+      <div class="space-login"></div>
       <div class="form-group row">
         <div class="col-sm-10 margin-left">
           <input
@@ -25,7 +25,7 @@
           />
         </div>
       </div>
-      <div class="space"></div>
+      <div class="space-login"></div>
       <div class="form-group row">
         <div class="col-sm-10 text-center">
           <button
@@ -33,7 +33,7 @@
             class="btn btn-dark"
             @click="loginButtonPressed"
           >
-            Log In
+            Sign In
           </button>
         </div>
         <div class="col-sm-10 text-center">
@@ -139,14 +139,14 @@ export default {
   z-index: -1;
 }
 
-.form {
+.form-login {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 55%;
   left: 50%;
 }
 
-.main {
+.main-login {
   position: fixed;
   width: 100%;
   height: 100%;
@@ -156,8 +156,7 @@ export default {
   color: black;
 }
 
-
-.space {
+.space-login {
   padding-bottom: 1em;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <img id="Registration" src="../../assets/mainpicture.jpeg" />
-  <div class="main">
-    <form v-if="isRegistered == false" class="form">
+  <div class="main-login">
+    <form v-if="isRegistered == false" class="form-register">
       <div class="form-group row">
         <div class="col-sm-10">
           <input
@@ -13,7 +13,7 @@
           />
         </div>
       </div>
-      <div class="space"></div>
+      <div class="space-register"></div>
       <div class="form-group row">
         <div class="col-sm-10">
           <input
@@ -25,7 +25,7 @@
           />
         </div>
       </div>
-      <div class="space"></div>
+      <div class="space-register"></div>
       <div class="form-group row">
         <div class="col-sm-10 text-center">
           <button type="submit" class="btn btn-dark" @click="createUser">
@@ -34,7 +34,7 @@
         </div>
         <div class="col-sm-10 text-center">
           <router-link :to="{ path: '/login' }" class="link-color"
-            >Have an account</router-link
+            >I have an account</router-link
           >
         </div>
       </div>
@@ -100,18 +100,18 @@ export default {
   z-index: -1;
 }
 
-.space {
+.space-register {
   padding-bottom: 1em;
 }
 
-.form {
+.form-register {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 55%;
   left: 50%;
 }
 
-.main {
+.main-login {
   position: fixed;
   width: 100%;
   height: 100%;
