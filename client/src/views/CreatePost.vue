@@ -1,35 +1,48 @@
 <template>
   <div>
-    <router-link :to="{ path: '/' }"><button>Home</button></router-link>
-
     <div>
       <h1>Create a new post</h1>
     </div>
     <div>
-      <p>Description</p>
-      <textarea v-model="post.description" placeholder="description" />
-      <div
-        class="previewBlock"
-        :style="{ 'background-image': `url(${filePreview})` }"
-      ></div>
-      <div>
-        <label for="image">Upload Image</label>
-        <input
-          type="file"
-          ref="fileInput"
-          id="image"
-          name="image"
-          value=""
-          @change="uploadImage"
-        />
-      </div>
-      <div>
-        <button @click="createPost">Post</button>
-        Post
-      </div>
-      <div v-if="isPosted == true">
-        <p>Post uploaded!</p>
-      </div>
+      <form class="form">
+        <div class="form-group">
+          <textarea
+            class="form-control"
+            id="exampleFormControlTextarea1"
+            rows="3"
+            placeholder="Description"
+            v-model="post.description"
+          />
+        </div>
+        <div class="space"></div>
+        <div class="stuff">
+          <div class="upload-image">
+            <label for="formGroupExampleInput" class="space-image-upload-button"
+              >Upload an image</label
+            >
+            <input
+              type="file"
+              ref="fileInput"
+              id="image"
+              name="image"
+              value=""
+              @change="uploadImage"
+            />
+          </div>
+          <div class="post-button">
+            <button type="button" class="btn btn-dark" @click="createPost">
+              Post
+            </button>
+          </div>
+        </div>
+        <div
+          class="previewBlock"
+          :style="{ 'background-image': `url(${filePreview})` }"
+        ></div>
+        <div v-if="isPosted == true">
+          <p>Post uploaded!</p>
+        </div>
+      </form>
     </div>
   </div>
 </template>
@@ -96,8 +109,38 @@ export default {
   cursor: pointer;
   width: 300px;
   height: 280px;
-  margin: 0 auto 20px;
+  margin: 0 auto 40px;
   background-position: center center;
   background-size: cover;
+  margin-top: 5em;
+}
+
+h1 {
+  text-align: center;
+  padding-top: 1em;
+}
+
+.form {
+  width: 50em;
+}
+
+.stuff {
+  width: 50em;
+}
+
+.upload-image {
+  float: left;
+}
+
+.post-button {
+  float: right;
+}
+
+.space {
+  padding-bottom: 1em;
+}
+
+.space-image-upload-button {
+  padding-right: 0.2em;
 }
 </style>

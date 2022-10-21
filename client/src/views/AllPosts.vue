@@ -33,7 +33,6 @@ export default {
 </script>
 
 <style>
-
 .posts {
   justify-content: center;
   display: flex;
@@ -44,5 +43,6 @@ export default {
 
 h1 {
   text-align: center;
+  padding-top: 1em;
 }
 </style>

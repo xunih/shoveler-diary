@@ -1,22 +1,19 @@
 <template>
-  <div>
-    <h1>My Posts</h1>
+  <h1>My Posts</h1>
+  <div class="my-post">
     <div v-for="post in myPost" v-bind:key="post._id">
-      <h2>Description</h2>
-      <p>{{ post.description }}</p>
-      <h2>Post Date</h2>
-      <p>{{ post.postDate }}</p>
-      <span
-        class="previewBlock"
-        :style="{ 'background-image': `url(${post.image})` }"
-      ></span>
+      <Post :post="post" />
     </div>
   </div>
 </template>
 
 <script>
 import { Api } from "../Api";
+import Post from "../components/Post.vue";
 export default {
+  components: {
+    Post,
+  },
   data() {
     return {
       myPost: [],
@@ -35,3 +32,18 @@ export default {
   },
 };
 </script>
+
+<style>
+.my-post{
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  height: 50em;
+  width: 100%;
+}
+
+h1 {
+  text-align: center;
+  padding-top: 1em;
+}
+</style>
