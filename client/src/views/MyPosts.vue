@@ -2,8 +2,6 @@
   <div>
     <h1>My Posts</h1>
     <div v-for="post in myPost" v-bind:key="post._id">
-      <h2>Title</h2>
-      <p>{{ post.title }}</p>
       <h2>Description</h2>
       <p>{{ post.description }}</p>
       <h2>Post Date</h2>

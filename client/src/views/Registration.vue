@@ -1,24 +1,54 @@
 <template>
-  <section class="signup-view">
-    <form v-if="isRegistered == false" class="ui form">
-      <EmailField v-model="user.email" /><PasswordField
-        v-model="user.password"
-      />
-      <button @click="createUser">Sign Up</button>
+  <img id="Registration" src="../../assets/mainpicture.jpeg" />
+  <div class="main">
+    <form v-if="isRegistered == false" class="form">
+      <div class="form-group row">
+        <div class="col-sm-10">
+          <input
+            type="email"
+            class="form-control"
+            id="inputEmail3"
+            placeholder="Email"
+            v-model="user.email"
+          />
+        </div>
+      </div>
+      <div class="space"></div>
+      <div class="form-group row">
+        <div class="col-sm-10">
+          <input
+            type="password"
+            class="form-control"
+            id="inputPassword3"
+            placeholder="Password"
+            v-model="user.password"
+          />
+        </div>
+      </div>
+      <div class="space"></div>
+      <div class="form-group row">
+        <div class="col-sm-10 text-center">
+          <button type="submit" class="btn btn-dark" @click="createUser">
+            Sign Up
+          </button>
+        </div>
+        <div class="col-sm-10 text-center">
+          <router-link :to="{ path: '/login' }" class="link-color"
+            >Have an account</router-link
+          >
+        </div>
+      </div>
     </form>
-    <p v-if="isError == true && isRegistered == false">
-      That email is already registered. Try again with a new email or login
-      here.
-    </p>
+    <div class="col-sm-10" v-if="isError == true && isRegistered == false">
+      That email is already registered. Try again with a new email or login.
+    </div>
     <div v-if="isRegistered == true">
       <p>{{ message }}</p>
     </div>
-  </section>
+  </div>
 </template>
 <script>
 import { Api } from "../Api";
-import EmailField from "../components/EmailField.vue";
-import PasswordField from "../components/PasswordField.vue";
 import { reactive, ref } from "vue";
 export default {
   setup() {
@@ -50,6 +80,7 @@ export default {
             console.log(response.data);
             console.log(response.data.message);
             message = response.data.message;
+            console.log(message);
           })
           .catch((error) => {
             console.log("Error message " + error);
@@ -59,20 +90,34 @@ export default {
     };
     return { user, createUser, isError, isRegistered, message };
   },
-  components: {
-    EmailField,
-    PasswordField,
-  },
 };
 </script>
-<style scoped>
-.signup-view {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+<style>
+#Registration {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }
+
+.space {
+  padding-bottom: 1em;
+}
+
 .form {
-  width: 450px;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 55%;
+  left: 50%;
+}
+
+.main {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
+.link-color {
+  color: black;
 }
 </style>

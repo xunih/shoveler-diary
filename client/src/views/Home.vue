@@ -2,21 +2,39 @@
 
 <template>
   <div>
-    <router-link :to="{ path: '/register' }"
-      ><button>Sign Up</button></router-link
-    >
-    <router-link :to="{ path: '/login' }"><button>Sign In</button></router-link>
-    <router-link :to="{ path: '/post' }"
-      ><button>Create a post</button></router-link
-    >
-    <router-link :to="{ path: '/calendar' }"
-      ><button>Calendar</button></router-link
-    >
-    <router-link :to="{ path: '/discussion' }"
-      ><button>Dicussion</button></router-link
-    >
-    <router-link :to="{ path: '/posts' }"
-      ><button>All posts</button></router-link
-    >
+    <img id="Home" src="../../assets/mainpicture.jpeg" />
+    <div class="mainButtons">
+      <router-link :to="{ path: '/login' }">
+        <button type="button" class="btn btn-dark mr-2">Log In</button>
+      </router-link>
+      <div class="divider"></div>
+      <router-link :to="{ path: '/register' }">
+        <button type="button" class="btn btn-dark mr-2">Sign Up</button>
+      </router-link>
+
+    </div>
   </div>
 </template>
+
+<style>
+#Home {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.mainButtons {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  margin-right: -50%;
+  top: 50%;
+  left: 50%;
+}
+
+.divider{
+    width:5px;
+    height:auto;
+    display:inline-block;
+}
+</style>

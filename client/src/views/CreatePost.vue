@@ -6,9 +6,6 @@
       <h1>Create a new post</h1>
     </div>
     <div>
-      <p>Title</p>
-      <input v-model="post.title" placeholder="title" />
-      <br />
       <p>Description</p>
       <textarea v-model="post.description" placeholder="description" />
       <div
@@ -44,7 +41,6 @@ export default {
   setup() {
     let isPosted = ref(false);
     let post = reactive({
-      title: "",
       description: "",
       imageUrl: "",
       userId: "",
@@ -53,11 +49,10 @@ export default {
     let filePreview = ref("");
     let fileInput = ref(null);
     const createPost = () => {
-      if (post.title !== "" && post.description !== "") {
+      if (post.description !== "") {
         console.log("inside create post");
         // creates a new post object
         var newPost = {
-          title: post.title,
           description: post.description,
           image: post.imageUrl,
         };
