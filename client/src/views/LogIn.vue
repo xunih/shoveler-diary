@@ -43,17 +43,15 @@
         </div>
       </div>
     </form>
-    <div v-else-if="isLoggedIn == true" class="login-sucess">
-      <p>Welcome Back!</p>
-      <router-link :to="{ path: '/my-profile' }"
-        ><button type="button" class="btn btn-dark" @click="loginButtonPressed">
-          My Profile
-        </button></router-link
-      >
+    <div
+      class="error__message--not-matched"
+      v-if="loginFailed == true && isLoggedIn == false"
+    >
+      <p>Incorrect combination of user name and password.</p>
     </div>
-    <div v-else-if="loginFailed == true" class="form-login">
-      <p>Email and password not macthed!</p>
-    </div>
+  </div>
+  <div v-if="isLoggedIn == true" class="form--login">
+    <p>Welcome Back!</p>
   </div>
 </template>
 
@@ -74,23 +72,18 @@ export default {
     });
 
     const loginButtonPressed = () => {
-      // checks if the fields are empty
-      if (user.email === "" || user.password === "") {
-        //user.isEmpty = true
-      } else {
-        //user.isEmpty = false
-        console.log("hello");
+      if (user.email !== "" && user.password !== "") {
         var loginUser = {
           email: user.email,
           password: user.password,
         };
         Api.post("/users/login", loginUser)
           .then((response) => {
+            isLoggedIn.value = true;
             user.userId = response.data.data.user._id;
             localStorage.accessToken = response.data.accessToken;
             console.log("Received access token si");
             console.log(response);
-            isLoggedIn.value = true;
             localStorage.userId = user.userId;
           })
           .catch((error) => {
@@ -125,10 +118,10 @@ export default {
   left: 50%;
 }
 
-.login--sucess {
+.login--success {
   position: absolute;
   transform: translate(-50%, -50%);
-  top: 30%;
+  top: 55%;
   left: 50%;
 }
 
@@ -144,5 +137,13 @@ export default {
 
 .spacer--login {
   padding-bottom: 1em;
+}
+
+.error__message--not-matched {
+  text-align: center;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 70%;
+  left: 49%;
 }
 </style>

@@ -97,7 +97,7 @@ export default {
 .profile-page {
   position: absolute;
   transform: translate(-50%, -50%);
-  top: 55%;
+  top: 40%;
   left: 50%;
   text-align: center;
 }

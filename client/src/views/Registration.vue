@@ -132,12 +132,4 @@ export default {
   top: 70%;
   left: 50%;
 }
-
-/*
-.error__message--invalid-email{
-  position: absolute;
-  transform: translate(-50%, -50%);
-  top: 70%;
-  text-align: center;
-}*/
 </style>
