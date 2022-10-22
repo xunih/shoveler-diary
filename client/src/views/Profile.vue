@@ -29,14 +29,19 @@
       Save
     </button>
   </div>
+  <Image />
 </template>
 
 <script>
 import { Api } from "../Api";
 import { reactive, ref } from "vue";
 import { onMounted } from "@vue/runtime-core";
+import Image from "../components/BackgroundImg.vue";
 export default {
   props: ["userId"],
+  components: {
+    Image,
+  },
   setup(props) {
     let user = reactive({
       username: "",
@@ -97,7 +102,7 @@ export default {
 .profile-page {
   position: absolute;
   transform: translate(-50%, -50%);
-  top: 40%;
+  top: 35%;
   left: 50%;
   text-align: center;
 }

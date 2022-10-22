@@ -45,6 +45,7 @@
           <p>Post uploaded!</p>
         </div>
       </form>
+      <Image />
     </div>
   </div>
 </template>
@@ -52,7 +53,11 @@
 <script>
 import { Api } from "../Api";
 import { reactive, ref } from "vue";
+import Image from "../components/BackgroundImg.vue";
 export default {
+  components: {
+    Image,
+  },
   setup() {
     let isPosted = ref(false);
     let post = reactive({

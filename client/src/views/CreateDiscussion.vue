@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Create a new discussion</h1>
+    <h1 class="h1--create-discussion">Create a new discussion</h1>
   </div>
   <div>
     <form class="form--create-discussion">
@@ -31,13 +31,19 @@
     <div class="success-message--discussion" v-if="isPosted == true">
       <p>Discussion posted!</p>
     </div>
+    <Image />
   </div>
 </template>
 
 <script>
 import { Api } from "../Api";
 import { reactive, ref } from "vue";
+import Image from "../components/BackgroundImg.vue";
 export default {
+  components: {
+    Image,
+  },
+
   setup() {
     let discussion = reactive({
       title: "",
@@ -73,7 +79,7 @@ export default {
 .form--create-discussion {
   position: absolute;
   transform: translate(-50%, -50%);
-  top: 40%;
+  top: 35%;
   left: 50%;
   width: 50em;
 }
@@ -83,7 +89,11 @@ export default {
 }
 
 .success-message--discussion {
-  padding-top: 20em;
+  padding-top: 16em;
   text-align: center;
+}
+
+.h1--create-discussion {
+  padding-bottom: 0.1em;
 }
 </style>
