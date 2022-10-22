@@ -3,7 +3,7 @@
     <h1>Create a new discussion</h1>
   </div>
   <div>
-    <form class="form">
+    <form class="form--create-discussion ">
       <div class="form-group">
         <label for="exampleFormControlInput1" class="form-label">Title</label>
         <input
@@ -66,3 +66,13 @@ export default {
   },
 };
 </script>
+
+<style>
+.form--create-discussion {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 40%;
+  left: 50%;
+  width: 50em;
+}
+</style>

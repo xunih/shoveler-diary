@@ -4,7 +4,7 @@
       <h1>Create a new post</h1>
     </div>
     <div>
-      <form class="form">
+      <form class="form--create-post">
         <div class="form-group">
           <textarea
             class="form-control"
@@ -14,10 +14,12 @@
             v-model="post.description"
           />
         </div>
-        <div class="space"></div>
-        <div class="stuff">
-          <div class="upload-image">
-            <label for="formGroupExampleInput" class="space-image-upload-button"
+        <div class="spacer--create-post"></div>
+        <div class="upload-image">
+          <div class="upload-image__upload-area">
+            <label
+              for="formGroupExampleInput"
+              class="space--image-upload-button"
               >Upload an image</label
             >
             <input
@@ -29,7 +31,7 @@
               @change="uploadImage"
             />
           </div>
-          <div class="post-button">
+          <div class="upload-image__post-button">
             <button type="button" class="btn btn-dark" @click="createPost">
               Post
             </button>
@@ -120,27 +122,31 @@ h1 {
   padding-top: 1em;
 }
 
-.form {
-  width: 50em;
-}
-
-.stuff {
+.form--create-post {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 55%;
+  left: 50%;
   width: 50em;
 }
 
 .upload-image {
+  width: 50em;
+}
+
+.upload-image__upload-area {
   float: left;
 }
 
-.post-button {
+.upload-image__post-button {
   float: right;
 }
 
-.space {
+.spacer--create-post {
   padding-bottom: 1em;
 }
 
-.space-image-upload-button {
+.space--image-upload-button {
   padding-right: 0.2em;
 }
 </style>

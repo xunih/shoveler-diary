@@ -1,5 +1,5 @@
 <template>
-  <div class="header-class">
+  <div class="header">
     <router-link :to="{ path: '/post' }"
       ><button type="button" class="btn btn-dark mr-2 rounded-0">
         Create a post
@@ -40,16 +40,10 @@ export default {
 </script>
 
 <style>
-.header-class {
+.header {
   display: flex;
   justify-content: space-between;
   background-color: #212529;
   border-radius: 0 !important;
-}
-.header-class:first-child {
-  text-align: left;
-}
-.header-class:last-child {
-  text-align: right;
 }
 </style>

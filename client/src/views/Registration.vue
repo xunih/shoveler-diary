@@ -1,7 +1,7 @@
 <template>
   <img id="Registration" src="../../assets/mainpicture.jpeg" />
-  <div class="main-login">
-    <form v-if="isRegistered == false" class="form-register">
+  <div class="main--register">
+    <form v-if="isRegistered == false" class="form--register">
       <div class="form-group row">
         <div class="col-sm-10">
           <input
@@ -13,7 +13,7 @@
           />
         </div>
       </div>
-      <div class="space-register"></div>
+      <div class="spacer--register"></div>
       <div class="form-group row">
         <div class="col-sm-10">
           <input
@@ -25,7 +25,7 @@
           />
         </div>
       </div>
-      <div class="space-register"></div>
+      <div class="spacer--register"></div>
       <div class="form-group row">
         <div class="col-sm-10 text-center">
           <button type="submit" class="btn btn-dark" @click="createUser">
@@ -33,7 +33,7 @@
           </button>
         </div>
         <div class="col-sm-10 text-center">
-          <router-link :to="{ path: '/login' }" class="link-color"
+          <router-link :to="{ path: '/login' }" class="link__color--register"
             >I have an account</router-link
           >
         </div>
@@ -100,24 +100,24 @@ export default {
   z-index: -1;
 }
 
-.space-register {
+.spacer--register {
   padding-bottom: 1em;
 }
 
-.form-register {
+.form--register {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 55%;
   left: 50%;
 }
 
-.main-login {
+.main--register {
   position: fixed;
   width: 100%;
   height: 100%;
 }
 
-.link-color {
+.link__color--register {
   color: black;
 }
 </style>

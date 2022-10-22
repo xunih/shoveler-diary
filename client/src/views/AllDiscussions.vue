@@ -8,7 +8,7 @@
         :key="discussion._id"
       >
         <router-link
-          class="link-style"
+          class="link"
           :to="{ path: '/discussion/' + discussion._id }"
         >
           <button type="button" class="list-group-item list-group-item-action">
@@ -69,7 +69,7 @@ export default {
 </script>
 
 <style>
-.link-style {
+.link {
   text-decoration: none;
 }
 

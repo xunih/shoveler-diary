@@ -1,7 +1,7 @@
 <template>
   <img id="Login" src="../../assets/mainpicture.jpeg" />
-  <div class="main-login">
-    <form v-if="isLoggedIn == false" class="form-login">
+  <div class="main--login-page">
+    <form v-if="isLoggedIn == false" class="form--login">
       <div class="form-group row">
         <div class="col-sm-10">
           <input
@@ -13,9 +13,9 @@
           />
         </div>
       </div>
-      <div class="space-login"></div>
+      <div class="spacer--login"></div>
       <div class="form-group row">
-        <div class="col-sm-10 margin-left">
+        <div class="col-sm-10">
           <input
             type="password"
             class="form-control"
@@ -25,7 +25,7 @@
           />
         </div>
       </div>
-      <div class="space-login"></div>
+      <div class="spacer--login"></div>
       <div class="form-group row">
         <div class="col-sm-10 text-center">
           <button
@@ -37,7 +37,7 @@
           </button>
         </div>
         <div class="col-sm-10 text-center">
-          <router-link :to="{ path: '/register' }" class="link-color"
+          <router-link :to="{ path: '/register' }" class="link__color--login"
             >Create an account</router-link
           >
         </div>
@@ -65,14 +65,8 @@
 <script>
 import { Api } from "../Api";
 import { reactive, ref } from "vue";
-import EmailField from "../components/EmailField.vue";
-import PasswordField from "../components/PasswordField.vue";
 
 export default {
-  components: {
-    EmailField,
-    PasswordField,
-  },
   setup() {
     let isLoggedIn = ref(false);
     let loginFailed = ref(false);
@@ -139,24 +133,24 @@ export default {
   z-index: -1;
 }
 
-.form-login {
+.form--login {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 55%;
   left: 50%;
 }
 
-.main-login {
+.main--login-page {
   position: fixed;
   width: 100%;
   height: 100%;
 }
 
-.link-color {
+.link__color--login {
   color: black;
 }
 
-.space-login {
+.spacer--login {
   padding-bottom: 1em;
 }
 </style>

@@ -3,7 +3,7 @@
 <template>
   <div>
     <img id="Home" src="../../assets/mainpicture.jpeg" />
-    <div class="mainButtons">
+    <div class="btn--home-page">
       <router-link :to="{ path: '/login' }">
         <button type="button" class="btn btn-dark mr-2">Log In</button>
       </router-link>
@@ -11,7 +11,6 @@
       <router-link :to="{ path: '/register' }">
         <button type="button" class="btn btn-dark mr-2">Sign Up</button>
       </router-link>
-
     </div>
   </div>
 </template>
@@ -24,7 +23,7 @@
   z-index: -1;
 }
 
-.mainButtons {
+.btn--home-page {
   position: absolute;
   transform: translate(-50%, -50%);
   margin-right: -50%;
@@ -32,9 +31,9 @@
   left: 50%;
 }
 
-.divider{
-    width:5px;
-    height:auto;
-    display:inline-block;
+.divider {
+  width: 5px;
+  height: auto;
+  display: inline-block;
 }
 </style>

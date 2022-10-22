@@ -1,8 +1,8 @@
 <template>
   <div class="post">
-    <div class="spacer"></div>
+    <div class="spacer--post"></div>
     <div
-      class="image"
+      class="image--post"
       :style="{ 'background-image': `url(${this.post.image})` }"
     ></div>
   </div>
@@ -32,7 +32,7 @@ export default {
   text-align: center;
 }
 
-.image {
+.image--post {
   margin-top: 2em;
   background-position: center center;
   background-size: cover;
@@ -43,7 +43,7 @@ export default {
   border: 1px solid rgb(101, 99, 99);
 }
 
-.spacer {
+.spacer--post {
   padding-top: 0.5em;
   position: absolute;
 }
