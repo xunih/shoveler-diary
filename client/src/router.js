@@ -45,10 +45,9 @@ const routes = [
     name: "AllPosts",
   },
   {
-    path: "/profile/:profileId",
+    path: "/my-profile",
     component: Profile,
     name: "Profile",
-    props: true,
   },
   {
     path: "/discussions",

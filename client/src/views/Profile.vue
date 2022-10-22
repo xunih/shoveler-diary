@@ -1,12 +1,12 @@
 <template>
   <div>
     <h2 class="h2--profile">Your username is:</h2>
-    <span v-if="editIsClicked == false">{{ profile.username }}</span>
+    <span v-if="editIsClicked == false">{{ user.username }}</span>
     <input
       v-if="editIsClicked == true"
-      v-model="username"
+      v-model="user.username"
       @change="getNewUsername"
-      :placeholder="profile.username"
+      :placeholder="user.username"
     />
     <button @click="changeUsername">Edit</button>
     <button v-if="editIsClicked == true" @click="updateUsername">Save</button>
@@ -18,11 +18,10 @@ import { Api } from "../Api";
 import { reactive, ref } from "vue";
 import { onMounted } from "@vue/runtime-core";
 export default {
-  props: ["profileId"],
+  props: ["userId"],
   setup(props) {
-    let profile = reactive({
+    let user = reactive({
       username: "",
-      profilePicture: "",
     });
 
     let editIsClicked = ref(false);
@@ -30,13 +29,14 @@ export default {
     let username = ref("");
 
     onMounted(() => {
-      Api.get(`/profiles/${props.profileId}`)
+      Api.get(`/users/${localStorage.userId}`)
         .then((response) => {
-          profile.username = response.data.username;
-          localStorage.username = profile.username;
+          user.username = response.data.username;
+          //localStorage.username = user.username;
+          console.log(user)
         })
         .catch((error) => {
-          profile = "";
+          user = "";
           console.log(error);
         });
     });
@@ -46,16 +46,16 @@ export default {
     };
 
     const getNewUsername = (e) => {
-      profile.username = e.target.value;
+      user.username = e.target.value;
     };
 
     const updateUsername = () => {
-      var newProfile = {
-        username: profile.username,
+      var newUsername = {
+        username: user.username,
       };
-      Api.patch("/profiles/" + props.profileId, newProfile)
+      Api.patch("/users/" + localStorage.userId, newUsername)
         .then((response) => {
-          profile.username = response.data.username;
+          username = response.data.username;
           editIsClicked.value = false;
         })
         .catch((error) => {
@@ -64,7 +64,7 @@ export default {
     };
 
     return {
-      profile,
+      user,
       changeUsername,
       editIsClicked,
       username,

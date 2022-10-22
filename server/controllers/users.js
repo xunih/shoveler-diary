@@ -1,7 +1,6 @@
 var express = require("express");
 var router = express.Router();
 var User = require("../models/user");
-var Profile = require("../models/profile");
 var Post = require("../models/post");
 var Event = require("../models/event");
 var Discussion = require("../models/discussion");
@@ -30,6 +29,7 @@ router.post("/signup", function (req, res, next) {
     email: req.body.email,
     password: req.body.password,
     post: req.body.post,
+    username: req.body.email,
     discussion: req.body.discussion,
     confirmationCode: token,
   });
@@ -117,7 +117,7 @@ router.get("/:id", authenticateJWT, function (req, res, next) {
   })
     .clone()
     .populate("pet")
-    .populate("profile")
+    .populate("username")
     .populate("event")
     .populate("post")
     .populate("discussion")
@@ -137,34 +137,6 @@ router.delete("/:id", function (req, res, next) {
     }
     res.json(user);
   });
-});
-
-router.post("/:id/profile", function (req, res, next) {
-  console.log("user name is ");
-  console.log(req.body);
-  var profile = new Profile(req.body);
-  var id = req.params.id;
-  profile.save(
-    function (err) {
-      if (err) {
-        return next(err);
-      }
-    },
-    User.findById(id, function (err, user) {
-      if (err) {
-        return next(err);
-      }
-      if (user === null) {
-        return res.status(404).json({
-          message: "User not found",
-        });
-      }
-      user.profile = profile;
-      console.log(user.profile);
-      user.save();
-      res.status(201).json(user);
-    })
-  );
 });
 
 router.post("/:id/posts", authenticateJWT, function (req, res, next) {
@@ -243,6 +215,23 @@ router.post("/:id/discussions", authenticateJWT, function (req, res, next) {
       res.status(201).json(user);
     })
   );
+});
+
+router.patch("/:id", authenticateJWT, function (req, res, next) {
+  var id = req.params.id;
+  User.findById(id, function (err, user) {
+    if (err) {
+      return next(err);
+    }
+    if (user === null) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+    user.username = req.body.username || user.username;
+    user.save();
+    res.status(201).json(user);
+  });
 });
 
 module.exports = router;

@@ -45,8 +45,8 @@
     </form>
     <div v-else-if="isLoggedIn == true" class="login-sucess">
       <p>Welcome Back!</p>
-      <router-link :to="{ path: '/profile/' + user.profileId }"
-        ><button type="submit" class="btn btn-dark" @click="loginButtonPressed">
+      <router-link :to="{ path: '/my-profile' }"
+        ><button type="button" class="btn btn-dark" @click="loginButtonPressed">
           My Profile
         </button></router-link
       >
@@ -92,17 +92,7 @@ export default {
             console.log(response);
             isLoggedIn.value = true;
             localStorage.userId = user.userId;
-            var newProfile = {
-              username: "heyhey",
-            };
-            Api.post("/users/" + user.userId + "/profile", newProfile).then(
-              (response) => {
-                user.profileId = response.data.profile._id;
-                localStorage.userId = user.userId;
-              }
-            );
           })
-          .then()
           .catch((error) => {
             console.log("Error message " + error);
             loginFailed.value = true;

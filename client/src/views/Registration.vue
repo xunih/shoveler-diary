@@ -60,7 +60,6 @@ export default {
       password: "",
       username: "",
       userId: "",
-      profileId: null,
       post: [],
       discussion: [],
     });
@@ -72,7 +71,6 @@ export default {
           post: user.post,
           discussion: user.discussion,
         };
-
         Api.post("/users/signup", newUser)
           .then((response) => {
             user.userId = response.data._id;
@@ -80,8 +78,7 @@ export default {
             console.log(response.data);
             console.log(response.data.message);
             message = response.data.message;
-            console.log(message);
-          })
+           })
           .catch((error) => {
             console.log("Error message " + error);
             isError.value = true;
