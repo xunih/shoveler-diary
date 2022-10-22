@@ -20,7 +20,6 @@ router.get("/", function (req, res, next) {
 
 // Create a new user
 router.post("/signup", function (req, res, next) {
-  console.log(req.body);
   const token = jwt.sign(
     { email: req.body.email, password: req.body.password },
     process.env.JWT_SECRET
@@ -32,6 +31,14 @@ router.post("/signup", function (req, res, next) {
     username: req.body.email,
     discussion: req.body.discussion,
     confirmationCode: token,
+  });
+  User.findOne({ email: req.body.email }, function (err, user) {
+    if (err) throw err;
+    if (user) {
+      res.status(409).send({
+        status: 409,
+      });
+    }
   });
   user.save(function (err) {
     if (err) {

@@ -1,6 +1,12 @@
 <template>
   <img id="Registration" src="../../assets/mainpicture.jpeg" />
   <div class="main--register">
+    <div
+      class="error__message--duplicate"
+      v-if="isDuplicated == true && isRegistered == false"
+    >
+      That email is already registered. Try again with a new email or login.
+    </div>
     <form v-if="isRegistered == false" class="form--register">
       <div class="form-group row">
         <div class="col-sm-10">
@@ -39,11 +45,9 @@
         </div>
       </div>
     </form>
-    <div class="col-sm-10" v-if="isError == true && isRegistered == false">
-      That email is already registered. Try again with a new email or login.
-    </div>
-    <div v-if="isRegistered == true">
-      <p>{{ message }}</p>
+
+    <div class="form--register" v-if="isRegistered == true">
+      <p>Please check your email to confirm your email address!</p>
     </div>
   </div>
 </template>
@@ -54,7 +58,7 @@ export default {
   setup() {
     let isRegistered = ref(false);
     let isError = ref(false);
-    let message = ref("");
+    let isDuplicated = ref(false);
     let user = reactive({
       email: "",
       password: "",
@@ -75,17 +79,21 @@ export default {
           .then((response) => {
             user.userId = response.data._id;
             isRegistered.value = true;
-            console.log(response.data);
-            console.log(response.data.message);
-            message = response.data.message;
-           })
+          })
           .catch((error) => {
-            console.log("Error message " + error);
-            isError.value = true;
+            console.log(error.response.data.status);
+            isRegistered.value = false;
+            if (error.response.data.status == 409) {
+              isDuplicated.value = true;
+              isError.value = false;
+            } else {
+              isDuplicated.value = false;
+              isError.value = true;
+            }
           });
       }
     };
-    return { user, createUser, isError, isRegistered, message };
+    return { user, createUser, isError, isRegistered, isDuplicated };
   },
 };
 </script>
@@ -117,4 +125,19 @@ export default {
 .link__color--register {
   color: black;
 }
+
+.error__message--duplicate {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 70%;
+  left: 50%;
+}
+
+/*
+.error__message--invalid-email{
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 70%;
+  text-align: center;
+}*/
 </style>
