@@ -2,6 +2,12 @@
   <div>
     <h1>Discussions</h1>
     <div class="discussion">
+      <div v-if="loading">
+        <img
+          src="../../assets/51a6e132b11664f7f2085bb6a35fc628.gif"
+          allowFullScreen
+        />
+      </div>
       <div
         class="list-group"
         v-for="discussion in discussions"
@@ -28,12 +34,14 @@ export default {
   data() {
     return {
       discussions: [],
+      loading: true,
     };
   },
   mounted() {
     Api.get("discussions")
       .then((response) => {
         this.discussions = response.data.discussions;
+        this.loading = false;
       })
       .catch((error) => {
         console.log(error);

@@ -1,6 +1,12 @@
 <template>
   <h1>Posts</h1>
   <div class="posts">
+    <div v-if="loading">
+      <img
+        src="../../assets/51a6e132b11664f7f2085bb6a35fc628.gif"
+        allowFullScreen
+      />
+    </div>
     <div v-for="post in posts" :key="post._id">
       <Post :post="post" />
     </div>
@@ -17,12 +23,14 @@ export default {
   data() {
     return {
       posts: [],
+      loading: true,
     };
   },
   mounted() {
     Api.get("posts")
       .then((response) => {
         this.posts = response.data.posts;
+        this.loading = false;
       })
       .catch((error) => {
         this.posts = [];
