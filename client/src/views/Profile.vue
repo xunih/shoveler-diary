@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Username:</h1>
+    <h2 class="h2--profile">Your username is:</h2>
     <span v-if="editIsClicked == false">{{ profile.username }}</span>
     <input
       v-if="editIsClicked == true"
@@ -74,3 +74,11 @@ export default {
   },
 };
 </script>
+
+<style>
+.h2--profile {
+  text-align: left;
+  padding-top: 1em;
+  padding-left: 1em;
+}
+</style>

@@ -1,15 +1,37 @@
 <template>
   <div>
-    <h1>Title:</h1>
-    <p>{{ discussion.title }}</p>
-    <h1>Description</h1>
-    <p>{{ discussion.description }}</p>
-    <h1>Comments</h1>
-    <p v-for="comment in discussion.comment" v-bind:key="comment">
-      Comment: {{ comment.body }} Post date: {{ comment.date }}
-    </p>
-    <textarea v-model="comment.body" placeholder="Add a comment" />
-    <button @click="addComment">Add</button>
+    <h1 class="h1--discussion-item">{{ discussion.title }}</h1>
+
+    <div class="description-box--description-item">
+      {{ discussion.description }}
+    </div>
+
+    <h1 class="h1--discussion-item">Comments</h1>
+    <div
+      class="comment__box"
+      v-for="comment in discussion.comment"
+      v-bind:key="comment"
+    >
+      <h5>Username:</h5>
+      {{ comment.body }} <br />Post date: {{ comment.date }}
+    </div>
+    <div class="spacer--comment"></div>
+    <div class="comment__text">
+      <textarea
+        class="form-control"
+        id="exampleFormControlTextarea1"
+        rows="3"
+        v-model="comment.body"
+        placeholder="Add a comment"
+      />
+    </div>
+
+    <div class="spacer--comment"></div>
+    <div class="comment__btn">
+      <button type="button" class="btn btn-dark" @click="addComment">
+        Save
+      </button>
+    </div>
   </div>
 </template>
 
@@ -66,3 +88,45 @@ export default {
   },
 };
 </script>
+
+<style>
+.h1--discussion-item {
+  text-align: left;
+  padding-left: 1em;
+}
+
+.description-box--description-item {
+  margin-left: 2em;
+  padding-left: 1em;
+  text-align: left;
+  width: 50em;
+  position: absolute;
+  word-break: break-all;
+  border: 1px solid rgb(101, 99, 99);
+  border-radius: 15px;
+}
+
+.comment__box {
+  margin-left: 2em;
+  padding-left: 1em;
+  margin-bottom: 1em;
+  text-align: left;
+  width: 50em;
+  word-break: break-all;
+  border: 1px solid rgb(101, 99, 99);
+  border-radius: 15px;
+}
+
+.spacer--comment {
+  padding-bottom: 1em;
+}
+
+.comment__btn {
+  margin-left: 2em;
+}
+
+.comment__text {
+  margin-left: 2em;
+  width: 50em;
+}
+</style>

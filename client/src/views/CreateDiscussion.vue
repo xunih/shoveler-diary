@@ -5,7 +5,6 @@
   <div>
     <form class="form--create-discussion ">
       <div class="form-group">
-        <label for="exampleFormControlInput1" class="form-label">Title</label>
         <input
           type="title"
           class="form-control"
@@ -14,9 +13,6 @@
           v-model="discussion.title"
         />
         <div class="space"></div>
-        <label for="exampleFormControlTextarea1" class="form-label"
-          >Description</label
-        >
         <textarea
           class="form-control"
           id="exampleFormControlTextarea1"

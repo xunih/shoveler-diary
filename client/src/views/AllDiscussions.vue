@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>All Discussions</h1>
+    <h1>Discussions</h1>
     <div class="discussion">
       <div
         class="list-group"
@@ -12,7 +12,8 @@
           :to="{ path: '/discussion/' + discussion._id }"
         >
           <button type="button" class="list-group-item list-group-item-action">
-            Title: {{ discussion.title }} Post date:
+            <h3>{{ discussion.title }}</h3>
+            Post date:
             {{ discussion.postDate }}
           </button></router-link
         >
@@ -74,6 +75,10 @@ export default {
 }
 
 .discussion {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 30%;
+  left: 50%;
   width: 50em;
 }
 </style>

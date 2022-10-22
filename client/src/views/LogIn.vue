@@ -43,22 +43,17 @@
         </div>
       </div>
     </form>
-  </div>
-  <div v-if="isLoggedIn == true">
-    <p>Welcome Back!</p>
-    <router-link :to="{ path: '/' }"><button>Home</button></router-link>
-    <router-link :to="{ path: '/profile/' + user.profileId }"
-      ><button>My Profile</button></router-link
-    >
-    <router-link
-      :to="{
-        path: '/my-post',
-      }"
-      ><button>My Posts</button></router-link
-    >
-  </div>
-  <div v-else-if="loginFailed == true">
-    <p>Email and password not macthed!</p>
+    <div v-else-if="isLoggedIn == true" class="login-sucess">
+      <p>Welcome Back!</p>
+      <router-link :to="{ path: '/profile/' + user.profileId }"
+        ><button type="submit" class="btn btn-dark" @click="loginButtonPressed">
+          My Profile
+        </button></router-link
+      >
+    </div>
+    <div v-else-if="loginFailed == true" class="form-login">
+      <p>Email and password not macthed!</p>
+    </div>
   </div>
 </template>
 
@@ -137,6 +132,13 @@ export default {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 55%;
+  left: 50%;
+}
+
+.login--sucess {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 30%;
   left: 50%;
 }
 
