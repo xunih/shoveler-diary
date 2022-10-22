@@ -35,6 +35,11 @@
         Discussions
       </button></router-link
     >
+    <router-link :to="{ path: '/' }"
+      ><button type="button" class="btn btn-dark mr-2 rounded-0">
+        Sign out
+      </button></router-link
+    >
   </div>
 </template>
 
