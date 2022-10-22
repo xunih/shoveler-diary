@@ -3,16 +3,16 @@
     <h1>Create a new discussion</h1>
   </div>
   <div>
-    <form class="form--create-discussion ">
+    <form class="form--create-discussion">
       <div class="form-group">
         <input
           type="title"
           class="form-control"
           id="exampleFormControlInput1"
-          placeholder="title"
+          placeholder="Title"
           v-model="discussion.title"
         />
-        <div class="space"></div>
+        <div class="spacer--create-discussion"></div>
         <textarea
           class="form-control"
           id="exampleFormControlTextarea1"
@@ -21,19 +21,22 @@
           v-model="discussion.description"
         />
       </div>
-      <div class="space"></div>
+      <div class="spacer--create-discussion"></div>
       <div class="text-center">
         <button type="button" class="btn btn-dark" @click="createDiscussion">
           Save
         </button>
       </div>
     </form>
+    <div class="success-message--discussion" v-if="isPosted == true">
+      <p>Discussion posted!</p>
+    </div>
   </div>
 </template>
 
 <script>
 import { Api } from "../Api";
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 export default {
   setup() {
     let discussion = reactive({
@@ -42,6 +45,8 @@ export default {
       userId: "",
       discussionId: null,
     });
+
+    let isPosted = ref(false);
 
     const createDiscussion = () => {
       var newDiscussion = {
@@ -53,12 +58,13 @@ export default {
           discussion.userId = localStorage.userId;
           discussion.discussionId = response.data.discussion._id;
           console.log(response.data);
+          isPosted.value = true;
         })
         .catch((error) => {
           console.log(error);
         });
     };
-    return { discussion, createDiscussion };
+    return { discussion, createDiscussion, isPosted };
   },
 };
 </script>
@@ -70,5 +76,14 @@ export default {
   top: 40%;
   left: 50%;
   width: 50em;
+}
+
+.spacer--create-discussion {
+  padding-bottom: 1em;
+}
+
+.success-message--discussion {
+  padding-top: 20em;
+  text-align: center;
 }
 </style>

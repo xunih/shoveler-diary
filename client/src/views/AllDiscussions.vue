@@ -76,9 +76,11 @@ export default {
 
 .discussion {
   position: absolute;
-  transform: translate(-50%, -50%);
-  top: 30%;
-  left: 50%;
   width: 50em;
+  height: 200px;
+  z-index: 30;
+  top: 35%;
+  left: 35%;
+  margin: -100px 0 0 -150px;
 }
 </style>

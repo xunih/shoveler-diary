@@ -41,7 +41,7 @@
           class="previewBlock"
           :style="{ 'background-image': `url(${filePreview})` }"
         ></div>
-        <div v-if="isPosted == true">
+        <div class="success-message--post" v-if="isPosted == true">
           <p>Post uploaded!</p>
         </div>
       </form>
@@ -148,5 +148,9 @@ h1 {
 
 .space--image-upload-button {
   padding-right: 0.2em;
+}
+
+.success-message--post {
+  text-align: center;
 }
 </style>
