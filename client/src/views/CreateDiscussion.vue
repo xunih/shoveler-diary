@@ -1,6 +1,9 @@
 <template>
   <div>
     <h1 class="h1--create-discussion">Create a new discussion</h1>
+    <div class="fail-message--discussion" v-if="isError == true">
+      <h3>You need to sign in!</h3>
+    </div>
   </div>
   <div>
     <form class="form--create-discussion">
@@ -53,6 +56,7 @@ export default {
     });
 
     let isPosted = ref(false);
+    let isError = ref(false);
 
     const createDiscussion = () => {
       var newDiscussion = {
@@ -65,12 +69,16 @@ export default {
           discussion.discussionId = response.data.discussion._id;
           console.log(response.data);
           isPosted.value = true;
+          isError.value = false;
         })
         .catch((error) => {
+          if (error.response.status == 403) {
+            isError.value = true;
+          }
           console.log(error);
         });
     };
-    return { discussion, createDiscussion, isPosted };
+    return { discussion, createDiscussion, isPosted, isError };
   },
 };
 </script>
@@ -89,7 +97,10 @@ export default {
 }
 
 .success-message--discussion {
-  padding-top: 16em;
+  text-align: center;
+}
+
+.fail-message--discussion {
   text-align: center;
 }
 

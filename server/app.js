@@ -6,7 +6,6 @@ var cors = require("cors");
 require("dotenv/config");
 
 var usersController = require("./controllers/users");
-var petsController = require("./controllers/pets");
 var eventsController = require("./controllers/events");
 var postsController = require("./controllers/posts");
 var discussionController = require("./controllers/discussions");
@@ -33,7 +32,6 @@ app.use(cors());
 
 app.get("/api", (req, res) => res.send("We are on posts"));
 app.use("/api/users", usersController);
-app.use("/api/pets", petsController);
 app.use("/api/events", eventsController);
 app.use("/api/posts", postsController);
 app.use("/api/discussions", discussionController);

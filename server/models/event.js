@@ -7,10 +7,6 @@ var eventSchema = new Schema({
   endTime: { type: Date, required: true },
   location: { type: String },
   note: { type: String },
-  pet: {
-    type: Schema.Types.ObjectId,
-    ref: "pets",
-  },
 });
 
 module.exports = mongoose.model("events", eventSchema);

@@ -1,7 +1,7 @@
 <template>
   <h1>My Posts</h1>
   <div class="my-post">
-    <div v-if="loading">
+    <div v-if="loading && !isError">
       <img
         src="../../assets/51a6e132b11664f7f2085bb6a35fc628.gif"
         allowFullScreen
@@ -10,6 +10,7 @@
     <div v-for="post in myPost" v-bind:key="post._id">
       <Post :post="post" />
     </div>
+    <h3 v-if="!loading &&isError">You need to sign in!</h3>
   </div>
 </template>
 
@@ -24,6 +25,7 @@ export default {
     return {
       myPost: [],
       loading: true,
+      isError: false,
     };
   },
 
@@ -32,8 +34,14 @@ export default {
       .then((response) => {
         this.myPost = response.data.post;
         this.loading = false;
+        this.isError= false;
       })
       .catch((error) => {
+        console.log(error.code);
+        if (error.response.status == 403) {
+          this.loading = false;
+          this.isError = true;
+        }
         this.myPost = [];
         console.log(error);
       });

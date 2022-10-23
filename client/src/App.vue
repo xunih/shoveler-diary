@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div v-if="location != 'http://localhost:8080/#/'">
+    <div>
       <Header />
     </div>
     <router-view />

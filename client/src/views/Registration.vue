@@ -34,7 +34,7 @@
       <div class="spacer--register"></div>
       <div class="form-group row">
         <div class="col-sm-10 text-center">
-          <button type="submit" class="btn btn-dark" @click="createUser">
+          <button type="button" class="btn btn-dark" @click="createUser">
             Sign Up
           </button>
         </div>

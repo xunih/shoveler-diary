@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import Home from "./views/Home.vue";
 import Register from "./views/Registration.vue";
 import LogIn from "./views/Login.vue";
@@ -10,7 +10,7 @@ import Profile from "./views/Profile.vue";
 import Discussions from "./views/AllDiscussions.vue";
 import Discussion from "./views/Discussion.vue";
 import MyPost from "./views/MyPosts.vue";
-import Confirmation from "./views/Confirmation.vue"
+import Confirmation from "./views/Confirmation.vue";
 
 const routes = [
   { path: "/", component: Home, name: "Home" },
@@ -74,8 +74,9 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHashHistory(),
-  routes,
+  history: createWebHistory(),
+  // base: 'configure-admin', <-- this does not work in vue 3
+  routes: routes,
 });
 
 export default router;

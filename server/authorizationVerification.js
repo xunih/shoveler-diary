@@ -5,10 +5,9 @@ const authenticateJWT = (req, res, next) => {
   
   if (authHeader) {
     const token = authHeader.split(" ")[1];
-    console.log("compared")
-    console.log(token)
     jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
       if (err) {
+        console.log(res)
         return res.sendStatus(403);
       }
       req.user = user;

@@ -1,6 +1,7 @@
 <template>
   <h1 class="h1--profile">My Profile</h1>
-  <div class="profile-page">
+  <h3 class="h3--profile" v-if="isError == true">You need to sign in!</h3>
+  <div v-if="isError == false" class="profile-page">
     Email: <span>{{ user.email }}</span>
     <div class="spacer--profile"></div>
     Username:
@@ -52,13 +53,19 @@ export default {
 
     let username = ref("");
 
+    let isError = ref(false);
+
     onMounted(() => {
       Api.get(`/users/${localStorage.userId}`)
         .then((response) => {
+          isError.value = false;
           user.username = response.data.username;
           user.email = response.data.email;
         })
         .catch((error) => {
+          if (error.response.status == 403) {
+            isError.value = true;
+          }
           user = "";
           console.log(error);
         });
@@ -93,6 +100,7 @@ export default {
       username,
       getNewUsername,
       updateUsername,
+      isError,
     };
   },
 };
@@ -114,5 +122,9 @@ export default {
 .h1--profile {
   text-align: center;
   padding-top: 1em;
+}
+
+.h3--profile {
+  text-align: center;
 }
 </style>

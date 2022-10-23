@@ -35,17 +35,35 @@
         Discussions
       </button></router-link
     >
-    <router-link :to="{ path: '/' }"
-      ><button type="button" class="btn btn-dark mr-2 rounded-0">
-        Sign out
-      </button></router-link
-    >
+    <button type="button" class="btn btn-dark mr-2 rounded-0" @click="signOut">
+      Sign out
+    </button>
   </div>
 </template>
 
 <script>
+import { useRouter } from "vue-router";
+import { onMounted } from "@vue/runtime-core";
+import { ref } from "vue";
 export default {
-  setup() {},
+  setup() {
+    let accessToken = ref("");
+    onMounted(() => {
+      accessToken.value = localStorage.getItem("accessToken");
+      console.log(accessToken.value);
+    });
+    const router = useRouter();
+    const signOut = () => {
+      router.push("/");
+      localStorage.clear();
+      accessToken.value = localStorage.getItem("accessToken");
+    };
+
+    return {
+      signOut,
+      accessToken,
+    };
+  },
 };
 </script>
 

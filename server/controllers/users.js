@@ -123,7 +123,6 @@ router.get("/:id", authenticateJWT, function (req, res, next) {
     res.json(user);
   })
     .clone()
-    .populate("pet")
     .populate("username")
     .populate("event")
     .populate("post")

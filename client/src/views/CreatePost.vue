@@ -2,7 +2,17 @@
   <div>
     <div>
       <h1>Create a new post</h1>
+      <div
+        class="success-message--post"
+        v-if="isPosted == true && isError == false"
+      >
+        <p>Post uploaded!</p>
+      </div>
+      <div class="fail-message--post" v-if="isError == true">
+        <h3>You need to sign in!</h3>
+      </div>
     </div>
+
     <div>
       <form class="form--create-post">
         <div class="form-group">
@@ -38,12 +48,9 @@
           </div>
         </div>
         <div
-          class="previewBlock"
+          class="image-preview"
           :style="{ 'background-image': `url(${filePreview})` }"
         ></div>
-        <div class="success-message--post" v-if="isPosted == true">
-          <p>Post uploaded!</p>
-        </div>
       </form>
       <Image />
     </div>
@@ -68,6 +75,7 @@ export default {
     });
     let filePreview = ref("");
     let fileInput = ref(null);
+    let isError = ref(false);
     const createPost = () => {
       if (post.description !== "") {
         console.log("inside create post");
@@ -83,8 +91,13 @@ export default {
             isPosted.value = true;
             post.userId = localStorage.userId;
             post.postId = response.data.post._id;
+            isError.value = false;
           })
           .catch((error) => {
+            if (error.response.status == 403) {
+              isPosted.value = false;
+              isError.value = true;
+            }
             console.log(error);
           });
       }
@@ -105,13 +118,21 @@ export default {
       }
     };
 
-    return { isPosted, post, createPost, uploadImage, fileInput, filePreview };
+    return {
+      isPosted,
+      post,
+      createPost,
+      uploadImage,
+      fileInput,
+      filePreview,
+      isError,
+    };
   },
 };
 </script>
 
 <style>
-.previewBlock {
+.image-preview {
   display: block;
   cursor: pointer;
   width: 300px;
@@ -156,6 +177,10 @@ h1 {
 }
 
 .success-message--post {
+  text-align: center;
+}
+
+.fail-message--post {
   text-align: center;
 }
 </style>

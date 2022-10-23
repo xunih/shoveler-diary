@@ -29,7 +29,7 @@
       <div class="form-group row">
         <div class="col-sm-10 text-center">
           <button
-            type="submit"
+            type="button"
             class="btn btn-dark"
             @click="loginButtonPressed"
           >
@@ -85,6 +85,7 @@ export default {
             console.log("Received access token si");
             console.log(response);
             localStorage.userId = user.userId;
+            localStorage.isLoggedin = true;
           })
           .catch((error) => {
             console.log("Error message " + error);
