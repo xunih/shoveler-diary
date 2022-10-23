@@ -7,8 +7,8 @@
         allowFullScreen
       />
     </div>
-    <div v-for="post in posts" :key="post._id">
-      <Post :post="post" />
+    <div v-for="post in posts" v-bind:key="post._id">
+      <Post :post="post" @delete-post="deletePost" />
     </div>
   </div>
 </template>
@@ -36,6 +36,20 @@ export default {
         this.posts = [];
         console.log(error);
       });
+  },
+  methods: {
+    deletePost(key) {
+      console.log("GOODBYE BUNNY");
+      Api.delete(`/posts/${key}`)
+        .then((response) => {
+          var index = this.posts.findIndex((post) => post._id === key);
+          this.posts.splice(index, 1);
+          console.log(this.posts);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 };
 </script>
