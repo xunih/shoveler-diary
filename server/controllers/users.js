@@ -55,7 +55,8 @@ router.post("/signup", function (req, res, next) {
   });
 });
 
-router.get("/verify/:confirmationCode", function (req, res, next) {
+router.get("/verify/:confirmationCode", function (req, res, next) { 
+  console.log("hejhejXuni")
   User.findOne({
     confirmationCode: req.params.confirmationCode,
   })

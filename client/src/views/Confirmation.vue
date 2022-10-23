@@ -19,17 +19,22 @@
 <script>
 import { Api } from "../Api";
 import { ref } from "vue";
+import { onMounted } from "@vue/runtime-core";
 export default {
   setup(props) {
+  
     let isVerified = ref(false);
-    console.log(window.location.href.split("/")[5]);
-    Api.get("/users/verify/" + window.location.href.split("/")[5])
-      .then((response) => {
-        isVerified.value = true;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    onMounted(() => {
+      console.log("vonfirmation/verify");
+      console.log(window.location.href.split("/")[5]);
+      Api.get("/users/verify/" + window.location.href.split("/")[5])
+        .then((response) => {
+          isVerified.value = true;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
 
     return {
       isVerified,

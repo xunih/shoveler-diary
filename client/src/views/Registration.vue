@@ -57,7 +57,6 @@ import { reactive, ref } from "vue";
 export default {
   setup() {
     let isRegistered = ref(false);
-    let isError = ref(false);
     let isDuplicated = ref(false);
     let user = reactive({
       email: "",
@@ -85,15 +84,13 @@ export default {
             isRegistered.value = false;
             if (error.response.data.status == 409) {
               isDuplicated.value = true;
-              isError.value = false;
             } else {
               isDuplicated.value = false;
-              isError.value = true;
             }
           });
       }
     };
-    return { user, createUser, isError, isRegistered, isDuplicated };
+    return { user, createUser, isRegistered, isDuplicated };
   },
 };
 </script>
