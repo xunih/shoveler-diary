@@ -5,6 +5,15 @@
       class="image--post"
       :style="{ 'background-image': `url(${this.post.image})` }"
     ></div>
+    <div v-if="this.isAdmin==='true'">
+      <button 
+        type="button"
+        class="btn btn-dark mr-2y rounded-0"
+        @click="$emit('delete-post', this.post._id)"
+      >
+        &times;
+      </button>
+    </div>
   </div>
   <div class="description-box">
     {{ this.post.description }}
@@ -12,10 +21,17 @@
 </template>
 
 <script>
+import { Api } from "../Api";
 export default {
   props: ["post"],
   data() {
-    return {};
+    return {
+      isAdmin: false,
+    };
+  },
+  mounted() {
+    this.isAdmin = localStorage.getItem("isAdmin");
+    console.log(this.isAdmin);
   },
 };
 </script>

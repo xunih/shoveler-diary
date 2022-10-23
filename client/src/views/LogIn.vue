@@ -85,8 +85,9 @@ export default {
             console.log("Received access token si");
             console.log(localStorage.getItem('accessToken'));
             localStorage.setItem('userId', user.userId)
-            console.log("hhi")
-            console.log(localStorage.getItem('userId'))
+            localStorage.setItem('isAdmin', response.data.data.user.admin)
+            console.log("isadmin")
+            console.log(localStorage.getItem('isAdmin'))
           })
           .catch((error) => {
             console.log("Error message " + error);

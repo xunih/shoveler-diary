@@ -41,6 +41,7 @@ export default {
       status.value = false;
       localStorage.setItem("accessToken", "");
       localStorage.setItem("userId", "");
+      localStorage.setItem("isAdmin", false);
     };
     return { status, signOut };
   },

@@ -6,6 +6,7 @@ var Discussion = require("../models/discussion");
 const jwt = require("jsonwebtoken");
 var { authenticateJWT } = require("../authorizationVerification");
 var { sendConfirmationEmail } = require("../nodemailer.config");
+const user = require("../models/user");
 
 // Return a list of all users
 router.get("/", function (req, res, next) {
@@ -30,7 +31,9 @@ router.post("/signup", function (req, res, next) {
     username: req.body.email,
     discussion: req.body.discussion,
     confirmationCode: token,
+    admin: false,
   });
+  user.admin = user.email == "xunih@outlook.com" ? true : false;
   User.findOne({ email: req.body.email }, function (err, user) {
     if (err) throw err;
     if (user) {
