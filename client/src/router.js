@@ -3,14 +3,13 @@ import Home from "./views/Home.vue";
 import Register from "./views/Registration.vue";
 import LogIn from "./views/Login.vue";
 import CreatePost from "./views/CreatePost.vue";
-import Calendar from "./views/Calendar.vue";
 import CreateDiscussion from "./views/CreateDiscussion.vue";
 import Posts from "./views/AllPosts.vue";
 import Profile from "./views/Profile.vue";
 import Discussions from "./views/AllDiscussions.vue";
 import Discussion from "./views/Discussion.vue";
 import MyPost from "./views/MyPosts.vue";
-import Confirmation from "./views/Confirmation.vue"
+import Confirmation from "./views/Confirmation.vue";
 
 const routes = [
   { path: "/", component: Home, name: "Home" },
@@ -30,11 +29,6 @@ const routes = [
     name: "CreatePost",
   },
   {
-    path: "/calendar",
-    component: Calendar,
-    name: "Calendar",
-  },
-  {
     path: "/discussion",
     component: CreateDiscussion,
     name: "CreateDiscussion",
@@ -45,10 +39,9 @@ const routes = [
     name: "AllPosts",
   },
   {
-    path: "/profile/:profileId",
+    path: "/my-profile",
     component: Profile,
     name: "Profile",
-    props: true,
   },
   {
     path: "/discussions",
@@ -76,7 +69,8 @@ const routes = [
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes,
+  // base: 'configure-admin', <-- this does not work in vue 3
+  routes: routes,
 });
 
 export default router;

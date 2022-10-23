@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var Discussion = require("../models/discussion");
+var { authenticateJWT } = require("../authorizationVerification");
 
 // Return a list of all discussions
 router.get("/", function (req, res, next) {
@@ -67,7 +68,7 @@ router.put("/:id", function (req, res, next) {
   );
 });
 
-router.patch("/:id", function (req, res, next) {
+router.patch("/:id", authenticateJWT, function (req, res, next) {
   var id = req.params.id;
   Discussion.findById(id, function (err, discussion) {
     if (err) {
@@ -78,7 +79,7 @@ router.patch("/:id", function (req, res, next) {
         message: "Discussion topic not found",
       });
     }
-    discussion.comment.push(req.body.comment);
+    discussion.comment.push(req.body);
     discussion.save();
     res.json(discussion);
   });

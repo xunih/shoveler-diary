@@ -1,9 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var User = require("../models/user");
-var Profile = require("../models/profile");
 var Post = require("../models/post");
-var Event = require("../models/event");
 var Discussion = require("../models/discussion");
 const jwt = require("jsonwebtoken");
 var { authenticateJWT } = require("../authorizationVerification");
@@ -21,7 +19,6 @@ router.get("/", function (req, res, next) {
 
 // Create a new user
 router.post("/signup", function (req, res, next) {
-  console.log(req.body);
   const token = jwt.sign(
     { email: req.body.email, password: req.body.password },
     process.env.JWT_SECRET
@@ -30,8 +27,17 @@ router.post("/signup", function (req, res, next) {
     email: req.body.email,
     password: req.body.password,
     post: req.body.post,
+    username: req.body.email,
     discussion: req.body.discussion,
     confirmationCode: token,
+  });
+  User.findOne({ email: req.body.email }, function (err, user) {
+    if (err) throw err;
+    if (user) {
+      res.status(409).send({
+        status: 409,
+      });
+    }
   });
   user.save(function (err) {
     if (err) {
@@ -49,7 +55,8 @@ router.post("/signup", function (req, res, next) {
   });
 });
 
-router.get("/verify/:confirmationCode", function (req, res, next) {
+router.get("/verify/:confirmationCode", function (req, res, next) { 
+  console.log("hejhejXuni")
   User.findOne({
     confirmationCode: req.params.confirmationCode,
   })
@@ -104,7 +111,7 @@ router.post("/login", function (req, res, next) {
 });
 
 // Return the user with the given ID
-router.get("/:id", authenticateJWT, function (req, res, next) {
+router.get("/:id", function (req, res, next) {
   var id = req.params.id;
   User.findById(id, function (err, user) {
     if (err) {
@@ -116,9 +123,7 @@ router.get("/:id", authenticateJWT, function (req, res, next) {
     res.json(user);
   })
     .clone()
-    .populate("pet")
-    .populate("profile")
-    .populate("event")
+    .populate("username")
     .populate("post")
     .populate("discussion")
     .then((p) => console.log(p))
@@ -137,34 +142,6 @@ router.delete("/:id", function (req, res, next) {
     }
     res.json(user);
   });
-});
-
-router.post("/:id/profile", function (req, res, next) {
-  console.log("user name is ");
-  console.log(req.body);
-  var profile = new Profile(req.body);
-  var id = req.params.id;
-  profile.save(
-    function (err) {
-      if (err) {
-        return next(err);
-      }
-    },
-    User.findById(id, function (err, user) {
-      if (err) {
-        return next(err);
-      }
-      if (user === null) {
-        return res.status(404).json({
-          message: "User not found",
-        });
-      }
-      user.profile = profile;
-      console.log(user.profile);
-      user.save();
-      res.status(201).json(user);
-    })
-  );
 });
 
 router.post("/:id/posts", authenticateJWT, function (req, res, next) {
@@ -187,32 +164,6 @@ router.post("/:id/posts", authenticateJWT, function (req, res, next) {
         });
       }
       user.post.push(post);
-      user.save();
-      res.status(201).json(user);
-    })
-  );
-});
-
-router.post("/:id/events", authenticateJWT, function (req, res, next) {
-  var event = new Event(req.body);
-  var id = req.params.id;
-  event.save(
-    function (err) {
-      if (err) {
-        return next(err);
-      }
-    },
-    User.findById(id, function (err, user) {
-      if (err) {
-        return next(err);
-      }
-      if (user === null) {
-        return res.status(404).json({
-          message: "User not found",
-        });
-      }
-      user.event.push(event);
-      console.log(user.event);
       user.save();
       res.status(201).json(user);
     })
@@ -243,6 +194,23 @@ router.post("/:id/discussions", authenticateJWT, function (req, res, next) {
       res.status(201).json(user);
     })
   );
+});
+
+router.patch("/:id", authenticateJWT, function (req, res, next) {
+  var id = req.params.id;
+  User.findById(id, function (err, user) {
+    if (err) {
+      return next(err);
+    }
+    if (user === null) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+    user.username = req.body.username || user.username;
+    user.save();
+    res.status(201).json(user);
+  });
 });
 
 module.exports = router;

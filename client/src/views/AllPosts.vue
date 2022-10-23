@@ -1,29 +1,36 @@
 <template>
+  <h1>Posts</h1>
   <div class="posts">
-    <h1>All Posts</h1>
-    <div class="posts" v-for="post in posts" :key="post._id">
-      Title: {{ post.title }} Description: {{ post.description }} Post date:
-      {{ post.postDate }}
-      <div
-        class="previewBlock"
-        :style="{ 'background-image': `url(${post.image})` }"
-      ></div>
+    <div v-if="loading">
+      <img
+        src="../../assets/51a6e132b11664f7f2085bb6a35fc628.gif"
+        allowFullScreen
+      />
+    </div>
+    <div v-for="post in posts" :key="post._id">
+      <Post :post="post" />
     </div>
   </div>
 </template>
 
 <script>
 import { Api } from "../Api";
+import Post from "../components/Post.vue";
 export default {
+  components: {
+    Post,
+  },
   data() {
     return {
       posts: [],
+      loading: true,
     };
   },
   mounted() {
     Api.get("posts")
       .then((response) => {
         this.posts = response.data.posts;
+        this.loading = false;
       })
       .catch((error) => {
         this.posts = [];
@@ -34,23 +41,16 @@ export default {
 </script>
 
 <style>
-.previewBlock {
-  display: block;
-  cursor: pointer;
-  width: 300px;
-  height: 280px;
-  margin: 0 auto 20px;
-  background-position: center center;
-  background-size: cover;
+.posts {
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  height: 100em;
+  width: 100%;
 }
 
-.posts {
+h1 {
   text-align: center;
-  display: block;
-  height: auto;
-  width: 20%;
-  padding: 1%;
-  margin: 1%;
-  font-size: 90%;
+  padding-top: 1em;
 }
 </style>
