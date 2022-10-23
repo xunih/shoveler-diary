@@ -5,7 +5,7 @@
         Create a post
       </button></router-link
     >
-    <router-link :to="{ path: '/my-profile/' }"
+    <router-link :to="{ path: '/my-profile' }"
       ><button type="button" class="btn btn-dark mr-2y rounded-0">
         My Profile
       </button></router-link

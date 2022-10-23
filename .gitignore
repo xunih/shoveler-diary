@@ -26,8 +26,6 @@ pnpm-debug.log*
 dist
 package-lock.json
 **/*solved*
-**/*Config.js*
-!/webpack.config.js
 /public/*.js
 /public/*.html
 
