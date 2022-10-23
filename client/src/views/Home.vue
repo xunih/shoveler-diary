@@ -3,7 +3,7 @@
 <template>
   <div>
     <img id="Home" src="../../assets/mainpicture.jpeg" />
-    <div class="btn--home-page">
+    <div v-if="status == false" class="btn--home-page">
       <router-link :to="{ path: '/login' }">
         <button type="button" class="btn btn-dark mr-2">Log In</button>
       </router-link>
@@ -12,8 +12,40 @@
         <button type="button" class="btn btn-dark mr-2">Sign Up</button>
       </router-link>
     </div>
+    <div v-if="status == true" class="btn--home-page">
+      <button type="button" class="btn btn-dark mr-2" @click="signOut">
+        Sign out
+      </button>
+    </div>
   </div>
 </template>
+
+<script>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { onMounted } from "@vue/runtime-core";
+export default {
+  setup() {
+    let status = ref(false);
+    onMounted(() => {
+      if (localStorage.getItem("userId")) {
+        status.value = true;
+      } else {
+        status.value = false;
+      }
+    });
+
+    const router = useRouter();
+    const signOut = () => {
+      router.push("/");
+      status.value = false;
+      localStorage.setItem("accessToken", "");
+      localStorage.setItem("userId", "");
+    };
+    return { status, signOut };
+  },
+};
+</script>
 
 <style>
 #Home {
@@ -27,7 +59,7 @@
   position: absolute;
   transform: translate(-50%, -50%);
   margin-right: -50%;
-  top: 50%;
+  top: 55%;
   left: 50%;
 }
 

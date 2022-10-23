@@ -15,7 +15,7 @@
         My posts
       </button></router-link
     >
-   
+
     <router-link :to="{ path: '/discussion' }"
       ><button type="button" class="btn btn-dark mr-2y rounded-0">
         Create a dicussion
@@ -31,31 +31,17 @@
         Discussions
       </button></router-link
     >
-    <button type="button" class="btn btn-dark mr-2 rounded-0" @click="signOut">
-      Sign out
-    </button>
+    <router-link :to="{ path: '/' }"
+      ><button type="button" class="btn btn-dark mr-2 rounded-0">
+        Home
+      </button></router-link
+    >
   </div>
 </template>
 
 <script>
-import { useRouter } from "vue-router";
-import { onMounted } from "@vue/runtime-core";
-import { ref } from "vue";
 export default {
-  setup() {
-    const router = useRouter();
-    const signOut = () => {
-      router.push("/");
-      localStorage.setItem('accessToken', "");
-      console.log("ACCEESSSS TOOOOKEEEN")
-      console.log(localStorage.getItem('accessToken'))
-      localStorage.setItem('userId', '');
-    };
-
-    return {
-      signOut,
-    };
-  },
+  setup() {},
 };
 </script>
 
