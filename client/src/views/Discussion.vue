@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h1 class="h1--discussion-item">{{ discussion.title }}</h1>
+    <h1 class="h1--discussion-item">
+      {{ discussion.title }} Posted by: {{ discussion.username }}
+    </h1>
 
     <div class="description-box--description-item">
       {{ discussion.description }}
@@ -12,8 +14,8 @@
       v-for="comment in discussion.comment"
       v-bind:key="comment"
     >
-      <h5>Username:</h5>
-      {{ comment.body }} <br />Post date: {{ comment.date }}
+      {{ comment.content }} <br />Post date: {{ comment.commentDate }}
+      Posted by: {{ comment.username }}
     </div>
     <div class="spacer--comment"></div>
     <div class="comment__text">
@@ -21,7 +23,7 @@
         class="form-control"
         id="exampleFormControlTextarea1"
         rows="3"
-        v-model="comment.body"
+        v-model="addedComment"
         placeholder="Add a comment"
       />
     </div>
@@ -45,16 +47,18 @@ export default {
     let discussion = reactive({
       title: "",
       description: "",
-      comment: [{ body: "" }],
+      username: "",
+      comment: [],
     });
 
-    let comment = ref({ body: "" });
+    let addedComment = ref("");
 
     onMounted(() => {
       Api.get(`/discussions/${props.discussionId}`)
         .then((response) => {
           discussion.title = response.data.title;
           discussion.description = response.data.description;
+          discussion.username = response.data.username;
           discussion.comment = response.data.comment;
         })
         .catch((error) => {
@@ -64,27 +68,35 @@ export default {
     });
 
     const addComment = () => {
-      var newDiscussion = {
-        comment: comment.value,
-      };
       let userId = localStorage.getItem("userId");
-      console.log("userId");
-      console.log(userId);
       if (!userId) {
         alert("You need to sign in!");
       } else {
-        Api.patch("/discussions/" + props.discussionId, newDiscussion)
+        Api.get("/users/" + userId)
           .then((response) => {
-            console.log(response.data.comment.slice(-1)[0]);
-            discussion.comment = [
-              ...discussion.comment,
-              response.data.comment.slice(-1)[0],
-            ];
+            discussion.username = response.data.username;
+            console.log(discussion.username);
+            var newComment = {
+              content: addedComment.value,
+              username: discussion.username,
+            };
+            console.log(newComment);
+            Api.patch("/discussions/" + props.discussionId, newComment)
+              .then((response) => {
+                console.log(response.data.comment.slice(-1)[0]);
+                discussion.comment = [
+                  ...discussion.comment,
+                  response.data.comment.slice(-1)[0],
+                ];
+              })
+              .catch((error) => {
+                if (error.response.status == 403) {
+                  alert("You need to sign in!");
+                }
+                console.log(error);
+              });
           })
           .catch((error) => {
-            if (error.response.status == 403) {
-              alert("You need to sign in!");
-            }
             console.log(error);
           });
       }
@@ -92,8 +104,8 @@ export default {
 
     return {
       discussion,
-      comment,
       addComment,
+      addedComment,
     };
   },
 };

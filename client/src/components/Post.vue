@@ -51,7 +51,6 @@ export default {
 .description-box {
   text-align: center;
   width: 30em;
-  background-color: transparent;
   position: absolute;
   word-break: break-all;
 }

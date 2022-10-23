@@ -53,16 +53,13 @@ export default {
       description: "",
       userId: "",
       discussionId: null,
+      username: "",
     });
 
     let isPosted = ref(false);
     let isError = ref(false);
 
     const createDiscussion = () => {
-      var newDiscussion = {
-        title: discussion.title,
-        description: discussion.description,
-      };
       let userId = localStorage.getItem("userId");
       console.log("userId");
       console.log(userId);
@@ -70,18 +67,33 @@ export default {
         isPosted.value = false;
         isError.value = true;
       } else {
-        Api.post(`/users/${userId}/discussions/`, newDiscussion)
+        Api.get("/users/" + userId)
           .then((response) => {
-            discussion.userId = localStorage.userId;
-            discussion.discussionId = response.data.discussion._id;
-            console.log(response.data);
-            isPosted.value = true;
-            isError.value = false;
+            console.log("I am Pelle!");
+            console.log(response.data.username);
+            discussion.username = response.data.username;
+            console.log(discussion.username);
+            var newDiscussion = {
+              title: discussion.title,
+              description: discussion.description,
+              username: discussion.username,
+            };
+            console.log(newDiscussion);
+            Api.post(`/users/${userId}/discussions/`, newDiscussion)
+              .then((response) => {
+                discussion.userId = localStorage.userId;
+                discussion.discussionId = response.data.discussion._id;
+                isPosted.value = true;
+                isError.value = false;
+              })
+              .catch((error) => {
+                if (error.response.status == 403) {
+                  isError.value = true;
+                }
+                console.log(error);
+              });
           })
           .catch((error) => {
-            if (error.response.status == 403) {
-              isError.value = true;
-            }
             console.log(error);
           });
       }

@@ -79,7 +79,7 @@ router.patch("/:id", authenticateJWT, function (req, res, next) {
         message: "Discussion topic not found",
       });
     }
-    discussion.comment.push(req.body.comment);
+    discussion.comment.push(req.body);
     discussion.save();
     res.json(discussion);
   });
