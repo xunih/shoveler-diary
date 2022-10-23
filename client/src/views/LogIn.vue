@@ -81,11 +81,12 @@ export default {
           .then((response) => {
             isLoggedIn.value = true;
             user.userId = response.data.data.user._id;
-            localStorage.accessToken = response.data.accessToken;
+            localStorage.setItem('accessToken', response.data.accessToken);
             console.log("Received access token si");
-            console.log(response);
-            localStorage.userId = user.userId;
-            localStorage.isLoggedin = true;
+            console.log(localStorage.getItem('accessToken'));
+            localStorage.setItem('userId', user.userId)
+            console.log("hhi")
+            console.log(localStorage.getItem('userId'))
           })
           .catch((error) => {
             console.log("Error message " + error);

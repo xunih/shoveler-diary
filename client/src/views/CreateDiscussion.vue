@@ -63,20 +63,28 @@ export default {
         title: discussion.title,
         description: discussion.description,
       };
-      Api.post(`/users/${localStorage.userId}/discussions/`, newDiscussion)
-        .then((response) => {
-          discussion.userId = localStorage.userId;
-          discussion.discussionId = response.data.discussion._id;
-          console.log(response.data);
-          isPosted.value = true;
-          isError.value = false;
-        })
-        .catch((error) => {
-          if (error.response.status == 403) {
-            isError.value = true;
-          }
-          console.log(error);
-        });
+      let userId = localStorage.getItem("userId");
+      console.log("userId");
+      console.log(userId);
+      if (!userId) {
+        isPosted.value = false;
+        isError.value = true;
+      } else {
+        Api.post(`/users/${userId}/discussions/`, newDiscussion)
+          .then((response) => {
+            discussion.userId = localStorage.userId;
+            discussion.discussionId = response.data.discussion._id;
+            console.log(response.data);
+            isPosted.value = true;
+            isError.value = false;
+          })
+          .catch((error) => {
+            if (error.response.status == 403) {
+              isError.value = true;
+            }
+            console.log(error);
+          });
+      }
     };
     return { discussion, createDiscussion, isPosted, isError };
   },

@@ -111,7 +111,7 @@ router.post("/login", function (req, res, next) {
 });
 
 // Return the user with the given ID
-router.get("/:id", authenticateJWT, function (req, res, next) {
+router.get("/:id", function (req, res, next) {
   var id = req.params.id;
   User.findById(id, function (err, user) {
     if (err) {

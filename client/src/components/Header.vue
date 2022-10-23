@@ -15,11 +15,7 @@
         My posts
       </button></router-link
     >
-    <router-link :to="{ path: '/calendar' }"
-      ><button type="button" class="btn btn-dark mr-2y rounded-0">
-        Calendar
-      </button></router-link
-    >
+   
     <router-link :to="{ path: '/discussion' }"
       ><button type="button" class="btn btn-dark mr-2y rounded-0">
         Create a dicussion
@@ -47,21 +43,17 @@ import { onMounted } from "@vue/runtime-core";
 import { ref } from "vue";
 export default {
   setup() {
-    let accessToken = ref("");
-    onMounted(() => {
-      accessToken.value = localStorage.getItem("accessToken");
-      console.log(accessToken.value);
-    });
     const router = useRouter();
     const signOut = () => {
       router.push("/");
-      localStorage.clear();
-      accessToken.value = localStorage.getItem("accessToken");
+      localStorage.setItem('accessToken', "");
+      console.log("ACCEESSSS TOOOOKEEEN")
+      console.log(localStorage.getItem('accessToken'))
+      localStorage.setItem('userId', '');
     };
 
     return {
       signOut,
-      accessToken,
     };
   },
 };

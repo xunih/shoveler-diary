@@ -3,7 +3,6 @@ import Home from "./views/Home.vue";
 import Register from "./views/Registration.vue";
 import LogIn from "./views/Login.vue";
 import CreatePost from "./views/CreatePost.vue";
-import Calendar from "./views/Calendar.vue";
 import CreateDiscussion from "./views/CreateDiscussion.vue";
 import Posts from "./views/AllPosts.vue";
 import Profile from "./views/Profile.vue";
@@ -28,11 +27,6 @@ const routes = [
     path: "/post",
     component: CreatePost,
     name: "CreatePost",
-  },
-  {
-    path: "/calendar",
-    component: Calendar,
-    name: "Calendar",
   },
   {
     path: "/discussion",

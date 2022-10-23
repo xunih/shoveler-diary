@@ -85,21 +85,28 @@ export default {
           image: post.imageUrl,
         };
         // creates a new post
-        console.log(localStorage.userId);
-        Api.post(`/users/${localStorage.userId}/posts/`, newPost)
-          .then((response) => {
-            isPosted.value = true;
-            post.userId = localStorage.userId;
-            post.postId = response.data.post._id;
-            isError.value = false;
-          })
-          .catch((error) => {
-            if (error.response.status == 403) {
-              isPosted.value = false;
-              isError.value = true;
-            }
-            console.log(error);
-          });
+        let userId = localStorage.getItem("userId");
+        console.log("userId");
+        console.log(userId);
+        if (!userId) {
+          isPosted.value = false;
+          isError.value = true;
+        } else {
+          Api.post(`/users/${userId}/posts/`, newPost)
+            .then((response) => {
+              isPosted.value = true;
+              post.userId = localStorage.userId;
+              post.postId = response.data.post._id;
+              isError.value = false;
+            })
+            .catch((error) => {
+              if (error.response.status == 403) {
+                isPosted.value = false;
+                isError.value = true;
+              }
+              console.log(error);
+            });
+        }
       }
     };
 

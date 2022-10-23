@@ -39,7 +39,6 @@ import { reactive, ref } from "vue";
 import { onMounted } from "@vue/runtime-core";
 import Image from "../components/BackgroundImg.vue";
 export default {
-  props: ["userId"],
   components: {
     Image,
   },
@@ -55,20 +54,29 @@ export default {
 
     let isError = ref(false);
 
-    onMounted(() => {
-      Api.get(`/users/${localStorage.userId}`)
-        .then((response) => {
-          isError.value = false;
-          user.username = response.data.username;
-          user.email = response.data.email;
-        })
-        .catch((error) => {
-          if (error.response.status == 403) {
-            isError.value = true;
-          }
-          user = "";
-          console.log(error);
-        });
+    onMounted(async () => {
+      let userId = localStorage.getItem("userId");
+      console.log("userId");
+      console.log(userId);
+      if (!userId) {
+        isError.value = true;
+      } else {
+        await Api.get("/users/" + userId)
+          .then((response) => {
+            isError.value = false;
+            user.username = response.data.username;
+            user.email = response.data.email;
+          })
+          .catch((error) => {
+            console.log(localStorage.getItem("userId"));
+            console.log(localStorage.getItem("accessToken"));
+            if (error.response.status == 403) {
+              isError.value = true;
+            }
+            user = "";
+            console.log(error);
+          });
+      }
     });
 
     const changeUsername = () => {
