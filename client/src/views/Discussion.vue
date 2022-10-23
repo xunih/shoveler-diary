@@ -67,17 +67,27 @@ export default {
       var newDiscussion = {
         comment: comment.value,
       };
-      Api.patch("/discussions/" + props.discussionId, newDiscussion)
-        .then((response) => {
-          console.log(response.data.comment.slice(-1)[0]);
-          discussion.comment = [
-            ...discussion.comment,
-            response.data.comment.slice(-1)[0],
-          ];
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      let userId = localStorage.getItem("userId");
+      console.log("userId");
+      console.log(userId);
+      if (!userId) {
+        alert("You need to sign in!");
+      } else {
+        Api.patch("/discussions/" + props.discussionId, newDiscussion)
+          .then((response) => {
+            console.log(response.data.comment.slice(-1)[0]);
+            discussion.comment = [
+              ...discussion.comment,
+              response.data.comment.slice(-1)[0],
+            ];
+          })
+          .catch((error) => {
+            if (error.response.status == 403) {
+              alert("You need to sign in!");
+            }
+            console.log(error);
+          });
+      }
     };
 
     return {

@@ -2,7 +2,6 @@ var express = require("express");
 var router = express.Router();
 var User = require("../models/user");
 var Post = require("../models/post");
-var Event = require("../models/event");
 var Discussion = require("../models/discussion");
 const jwt = require("jsonwebtoken");
 var { authenticateJWT } = require("../authorizationVerification");
@@ -124,7 +123,6 @@ router.get("/:id", function (req, res, next) {
   })
     .clone()
     .populate("username")
-    .populate("event")
     .populate("post")
     .populate("discussion")
     .then((p) => console.log(p))
@@ -165,32 +163,6 @@ router.post("/:id/posts", authenticateJWT, function (req, res, next) {
         });
       }
       user.post.push(post);
-      user.save();
-      res.status(201).json(user);
-    })
-  );
-});
-
-router.post("/:id/events", authenticateJWT, function (req, res, next) {
-  var event = new Event(req.body);
-  var id = req.params.id;
-  event.save(
-    function (err) {
-      if (err) {
-        return next(err);
-      }
-    },
-    User.findById(id, function (err, user) {
-      if (err) {
-        return next(err);
-      }
-      if (user === null) {
-        return res.status(404).json({
-          message: "User not found",
-        });
-      }
-      user.event.push(event);
-      console.log(user.event);
       user.save();
       res.status(201).json(user);
     })

@@ -23,12 +23,6 @@ var userSchema = new Schema({
   },
   password: { type: String, required: true },
   username: { type: String, required: true},
-  event: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "events",
-    },
-  ],
   post: [
     {
       type: Schema.Types.ObjectId,
