@@ -14,8 +14,8 @@
       v-for="comment in discussion.comment"
       v-bind:key="comment"
     >
-      {{ comment.content }} <br />Post date: {{ comment.commentDate }}
-      Posted by: {{ comment.username }}
+      {{ comment.content }} <br />Post date: {{ comment.commentDate }} Posted
+      by: {{ comment.username }}
     </div>
     <div class="spacer--comment"></div>
     <div class="comment__text">
@@ -74,14 +74,17 @@ export default {
       } else {
         Api.get("/users/" + userId)
           .then((response) => {
-            discussion.username = response.data.username;
-            console.log(discussion.username);
             var newComment = {
               content: addedComment.value,
-              username: discussion.username,
+              username: response.data.username,
             };
             console.log(newComment);
-            Api.patch("/discussions/" + props.discussionId, newComment)
+            const config = {
+              headers: {
+                authorization: localStorage.getItem("accessToken"),
+              },
+            };
+            Api.patch("/discussions/" + props.discussionId, newComment, config)
               .then((response) => {
                 console.log(response.data.comment.slice(-1)[0]);
                 discussion.comment = [

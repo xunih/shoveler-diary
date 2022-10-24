@@ -69,8 +69,6 @@ export default {
             isError.value = false;
           })
           .catch((error) => {
-            console.log(localStorage.getItem("userId"));
-            console.log(localStorage.getItem("accessToken"));
             if (error.response.status == 403) {
               isError.value = true;
             }
@@ -92,14 +90,22 @@ export default {
       var newUsername = {
         username: user.username,
       };
-      Api.patch("/users/" + localStorage.userId, newUsername)
-        .then((response) => {
-          username = response.data.username;
-          editIsClicked.value = false;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      const config = {
+        headers: {
+          authorization: localStorage.getItem("accessToken"),
+        },
+      };
+      let userId = localStorage.getItem("userId");
+      if (userId) {
+        Api.patch("/users/" + userId, newUsername, config)
+          .then((response) => {
+            username = response.data.username;
+            editIsClicked.value = false;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     };
 
     return {

@@ -4,9 +4,8 @@
     <div class="fail-message--discussion" v-if="isError == true">
       <h3>You need to sign in!</h3>
     </div>
-    
   </div>
- 
+
   <div>
     <form class="form--create-discussion">
       <div class="form-group">
@@ -80,8 +79,13 @@ export default {
               description: discussion.description,
               username: discussion.username,
             };
+            const config = {
+              headers: {
+                authorization: localStorage.getItem("accessToken"),
+              },
+            };
             console.log(newDiscussion);
-            Api.post(`/users/${userId}/discussions/`, newDiscussion)
+            Api.post(`/users/${userId}/discussions/`, newDiscussion, config)
               .then((response) => {
                 discussion.userId = localStorage.userId;
                 discussion.discussionId = response.data.discussion._id;

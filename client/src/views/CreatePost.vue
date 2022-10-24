@@ -92,7 +92,12 @@ export default {
           isPosted.value = false;
           isError.value = true;
         } else {
-          Api.post(`/users/${userId}/posts/`, newPost)
+          const config = {
+            headers: {
+              authorization: localStorage.getItem("accessToken"),
+            },
+          };
+          Api.post(`/users/${userId}/posts/`, newPost, config)
             .then((response) => {
               isPosted.value = true;
               post.userId = localStorage.userId;
