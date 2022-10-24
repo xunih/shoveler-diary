@@ -19,7 +19,7 @@ Model-View-Controller
 
 ## How to run locally
 
-After clone the git repository, please run the following commands in the terminal
+After clone the git repository, please go to the project folder and run the following commands in the terminal
 ```
 npm run install
 ```
