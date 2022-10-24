@@ -23,3 +23,5 @@ cd client
 npm run serve
 ```
 Open http://localhost:8080/#/
+
+After the first time you log in and go to another page for example "My profile", please refresh the webpage in order to get rid of an unfixed bug!
