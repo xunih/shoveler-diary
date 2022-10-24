@@ -66,6 +66,7 @@ export default {
             isError.value = false;
             user.username = response.data.username;
             user.email = response.data.email;
+            isError.value = false;
           })
           .catch((error) => {
             console.log(localStorage.getItem("userId"));
