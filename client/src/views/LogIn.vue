@@ -1,5 +1,5 @@
 <template>
-  <img id="Login" src="../../assets/mainpicture.jpeg" />
+  <img id="Login" src="../../assets/AdobeStock_239531805.jpeg" />
   <div class="main--login-page">
     <form v-if="isLoggedIn == false" class="form--login">
       <div class="form-group row">
@@ -81,9 +81,9 @@ export default {
           .then((response) => {
             isLoggedIn.value = true;
             user.userId = response.data.data.user._id;
-            localStorage.setItem('accessToken', response.data.accessToken);
-            localStorage.setItem('userId', user.userId)
-            localStorage.setItem('isAdmin', response.data.data.user.admin)
+            localStorage.setItem("accessToken", response.data.accessToken);
+            localStorage.setItem("userId", user.userId);
+            localStorage.setItem("isAdmin", response.data.data.user.admin);
           })
           .catch((error) => {
             console.log("Error message " + error);
@@ -106,14 +106,16 @@ export default {
 #Login {
   position: fixed;
   width: 100%;
-  height: 100%;
+  top: 38%;
+  height: 70%;
+  left: 0%;
   z-index: -1;
 }
 
 .form--login {
   position: absolute;
   transform: translate(-50%, -50%);
-  top: 55%;
+  top: 20%;
   left: 50%;
 }
 
@@ -142,7 +144,7 @@ export default {
   text-align: center;
   position: absolute;
   transform: translate(-50%, -50%);
-  top: 70%;
+  top: 35%;
   left: 49%;
 }
 </style>

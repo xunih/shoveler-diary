@@ -1,5 +1,5 @@
 <template>
-  <img id="Registration" src="../../assets/mainpicture.jpeg" />
+  <img id="Registration" src="../../assets/AdobeStock_239531805.jpeg" />
   <div class="main--register">
     <div
       class="error__message--duplicate"
@@ -98,7 +98,9 @@ export default {
 #Registration {
   position: fixed;
   width: 100%;
-  height: 100%;
+  top: 38%;
+  height: 70%;
+  left: 0%;
   z-index: -1;
 }
 
@@ -109,7 +111,7 @@ export default {
 .form--register {
   position: absolute;
   transform: translate(-50%, -50%);
-  top: 55%;
+  top: 20%;
   left: 50%;
 }
 
@@ -126,7 +128,7 @@ export default {
 .error__message--duplicate {
   position: absolute;
   transform: translate(-50%, -50%);
-  top: 70%;
+  top: 35%;
   left: 50%;
 }
 </style>
