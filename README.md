@@ -19,7 +19,17 @@ Model-View-Controller
 
 ## How to run locally
 
-After clone the git repository, please add an .env file where you store all the required sensitive variables. Then go to the project folder and run the following commands in the terminal
+After clone the git repository, please add an .env file where you store all the required sensitive variables. 
+The .env file should look like this: 
+```
+MONGODB_URI = replaceWithYourMongoDBUri
+PORT = replaceWithYourPort
+JWT_SECRET = replaceWithYourJwtSecret 
+JWT_EXPIRES_IN = replaceWithTheExpirationTime
+user = replaceWithYourGmailAddressThatWillBeUsedToSendOutTheConfirmationEmail
+pass = replaceWithYourGmailAppPassword
+```
+Then go to the project folder and run the following commands in the terminal
 ```
 npm run install
 ```
