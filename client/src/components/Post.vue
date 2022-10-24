@@ -23,6 +23,7 @@
 <script>
 import { Api } from "../Api";
 export default {
+  emits: ["delete-post"],
   props: ["post"],
   data() {
     return {

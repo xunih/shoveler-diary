@@ -4,7 +4,9 @@
     <div class="fail-message--discussion" v-if="isError == true">
       <h3>You need to sign in!</h3>
     </div>
+    
   </div>
+ 
   <div>
     <form class="form--create-discussion">
       <div class="form-group">
@@ -107,7 +109,7 @@ export default {
 .form--create-discussion {
   position: absolute;
   transform: translate(-50%, -50%);
-  top: 35%;
+  top: 40%;
   left: 50%;
   width: 50em;
 }

@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <img id="Home" src="../../assets/mainpicture.jpeg" />
+    <img id="Home" src="../../assets/AdobeStock_239531805.jpeg" />
     <div v-if="status == false" class="btn--home-page">
       <router-link :to="{ path: '/login' }">
         <button type="button" class="btn btn-dark mr-2">Log In</button>
@@ -52,7 +52,8 @@ export default {
 #Home {
   position: fixed;
   width: 100%;
-  height: 100%;
+  top: 38%;
+  height: 70%;
   z-index: -1;
 }
 
@@ -60,7 +61,7 @@ export default {
   position: absolute;
   transform: translate(-50%, -50%);
   margin-right: -50%;
-  top: 55%;
+  top: 30%;
   left: 50%;
 }
 
