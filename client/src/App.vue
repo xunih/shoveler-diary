@@ -16,8 +16,6 @@ export default {
     let theme = ref("light");
     const chanegTheme = () => {
       theme.value = theme.value === "dark" ? "light" : "dark";
-      console.log("hihihaha");
-      console.log(theme);
     };
     return { theme, chanegTheme };
   },
