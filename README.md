@@ -7,7 +7,7 @@ A forum for users to post pet images, post questions related to pets, and post p
 1. Register and Login
 2. Upload images
 3. Create a discussion topic and add comments
-4. Admin user can delete posts (The only admin user: xunih@outlook.com
+4. Admin user can delete posts (The only admin user: xunih@outlook.com)
 
 ## Current bugs
 When it's the first time opening http://localhost:8080/#/, after login, users cannot create a post, create a discussion topic, or edit the username. After refreshing the webpage it works well.
