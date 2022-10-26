@@ -5,8 +5,8 @@
       class="image--post"
       :style="{ 'background-image': `url(${this.post.image})` }"
     ></div>
-    <div v-if="this.isAdmin==='true'">
-      <button 
+    <div v-if="this.isAdmin === 'true'">
+      <button
         type="button"
         class="btn btn-dark mr-2y rounded-0"
         @click="$emit('delete-post', this.post._id)"
@@ -14,9 +14,9 @@
         &times;
       </button>
     </div>
-  </div>
-  <div class="description-box">
-    {{ this.post.description }}
+    <div class="description-box">
+      {{ this.post.description }}
+    </div>
   </div>
 </template>
 
@@ -41,7 +41,7 @@ export default {
 .post {
   background-color: transparent;
   width: 30%;
-  height: 100%;
+  height: 80vh;
   border-radius: 10% 10% 0 0;
   display: flex;
   justify-content: center;
@@ -55,7 +55,7 @@ export default {
   background-size: cover;
   display: block;
   width: 25em;
-  height: 90%;
+  max-height: 40em;
   border-radius: 10% 10% 10% 10%;
   border: 1px solid rgb(101, 99, 99);
 }
@@ -68,6 +68,7 @@ export default {
 .description-box {
   text-align: center;
   width: 30em;
+  max-height: 30em;
   position: absolute;
   word-break: break-all;
 }
