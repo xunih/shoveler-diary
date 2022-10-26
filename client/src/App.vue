@@ -30,7 +30,7 @@ export default {
   /* Variables for dark mode */
   background-color: black;
   color: white;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .light-theme {

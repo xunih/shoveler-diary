@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="discussions">
     <h1>Discussions</h1>
     <div class="discussion">
       <div v-if="loading">
@@ -90,5 +90,10 @@ export default {
   top: 35%;
   left: 35%;
   margin: -100px 0 0 -150px;
+}
+
+.discussions {
+  min-height: 100vh;
+  width: 100%;
 }
 </style>

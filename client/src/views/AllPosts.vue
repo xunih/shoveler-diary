@@ -59,7 +59,7 @@ export default {
   justify-content: center;
   display: flex;
   flex-wrap: wrap;
-  height: 100em;
+  min-height: 100vh;
   width: 100%;
 }
 

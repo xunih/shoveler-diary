@@ -1,5 +1,6 @@
 <template>
   <h1>My Posts</h1>
+  <h3 v-if="!loading && isError">You need to sign in!</h3>
   <div class="my-post" :key="renderKey">
     <div v-if="loading && !isError">
       <img
@@ -10,7 +11,6 @@
     <div v-for="post in myPost" v-bind:key="post._id">
       <Post :post="post" />
     </div>
-    <h3 v-if="!loading && isError">You need to sign in!</h3>
   </div>
 </template>
 
@@ -64,7 +64,7 @@ export default {
   justify-content: center;
   display: flex;
   flex-wrap: wrap;
-  height: 50em;
+  min-height: 100vh;
   width: 100%;
 }
 
